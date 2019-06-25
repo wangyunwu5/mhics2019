@@ -366,65 +366,6 @@ a:hover {
 										<p>--</p>
 									</#if>  
 								</div>
-								 <div class="col-md-12 form-group ">
-										<label class="control-label"><span>location photo</span></label> 
-										<div class="form-group biankuang">
-											<#if locationPhoto??>
-												<#list locationPhoto as lp>
-												<ul class="img_list_ul"><li>
-													<img style="width: 110px;height: 110px;" src="/image/${lp}">
-												</li></ul>
-												</#list>
-											</#if>
-										</div>
-								</div>
-								<div class="col-md-12 form-group ">
-									<label class="control-label"><span>internal photo</span></label> 
-									<div class="form-group biankuang">
-											
-									</div>
-								</div>
-								<div class="col-md-12 form-group ">
-									<label class="control-label"><span>location sketch</span></label> 
-									<div class="form-group biankuang">
-										
-									</div>  
-								</div>
-								<div class="col-md-12 form-group">
-									<label class="control-label"><span>plan of mh</span></label> 
-								    <div class="form-group biankuang">
-									</div> 
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>cover photo</span></label> 
-									<div class="form-group biankuang">
-									</div>
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>ladder photo</span></label>
-									<div class="form-group biankuang">
-									</div>
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>shaft photo</span></label> 
-									<div class="form-group biankuang">
-									</div>
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>chamber photo</span></label> 
-									<div class="form-group biankuang">
-									</div>
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>benching photo</span></label> 
-									<div class="form-group biankuang">
-									</div>
-								</div>
-								<div class="col-md-12 form-group " style="display:none">
-									<label class="control-label"><span>others photo</span></label> 
-									<div class="form-group biankuang">
-									</div>
-								</div> 
 							</div>
 						</div>
 					</div>
@@ -703,14 +644,14 @@ a:hover {
 								</div>
 								<div class="col-md-1 form-group">
 									<label class="control-label"><span>是否在斜坡</span></label>
-									<select class="form-control" name="onSlope" value="${(node.onSlope)!''}">
+									<select class="form-control slopeNo" name="onSlope" value="${(node.onSlope)!''}">
 										<option value="否">否</option>
 										<option value="是">是</option>
 									</select>
 								</div>
-								<div class="col-md-1 form-group">
+								<div class="col-md-1 form-group" style="display:none">
 									<label class="control-label"><span>斜坡编号</span></label>
-									<input name="slopeNo" class="form-control" value="${(node.slopeNo)!''}"/>
+									<input name="slopeNo" id="onSlope" class="form-control" value="${(node.slopeNo)!''}"/>
 								</div>  
 								<div class="col-md-1 form-group">
 									<label class="control-label"><span>井盖损坏</span></label>
@@ -779,14 +720,21 @@ a:hover {
 									<label class="control-label"><span>备注</span></label>
 									<input name="remark" class="form-control" value="${(node.remark)!''}"/>
 								</div>
-								 <div class="col-md-12 form-group ">
+							</div>
+						</div>
+					</div>
+					<!--盒子尾-->
+					<div class="box-body no-padding" >
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-12 form-group">
 										<label class="control-label"><span>location photo</span></label>
 										<div class="form-group biankuang" id="container1">
 											<div class="btn btn-default" style="position: relative; overflow: hidden;">
 												<i class="glyphicon glyphicon-open"></i> 上传照片
 											 	<input type="file" name="locationphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 												style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-												<input type="hidden" value="${(node.locationPhoto)!''}"/>
+												<input class="imgpath" type="hidden" value="${(node.locationPhoto)!''}"/>
 											</div>
 											<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 										</div>
@@ -798,6 +746,7 @@ a:hover {
 												<i class="glyphicon glyphicon-open"></i> 上传照片
 											 	<input type="file" name="internalphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 												style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+												<input class="imgpath" type="hidden" value="${(node.internalPhoto)!''}"/>
 											</div>
 											<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 										</div>
@@ -809,6 +758,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="locationsketch" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.locationSketch)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -820,6 +770,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="planofmh" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.planOfMh)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -831,6 +782,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="coverphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.coverPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -842,6 +794,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="ladderphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.ladderPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -853,6 +806,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="shaftphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.shaftPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -864,6 +818,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="chamberphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.chamberPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -875,6 +830,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="benchingphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.benchingPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -886,6 +842,7 @@ a:hover {
 											<i class="glyphicon glyphicon-open"></i> 上传照片
 										 	<input type="file" name="otherphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 											style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
+											<input class="imgpath" type="hidden" value="${(node.othersPhoto)!''}"/>
 										</div>
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
@@ -893,7 +850,6 @@ a:hover {
 							</div>
 						</div>
 					</div>
-					<!--盒子尾-->
 					<div class="box-footer">
 							<input class="btn btn-primary" id="save" type="submit" value="保存" />
 							<input class="btn btn-default" id="cancel" type="button" value="取消"
@@ -933,7 +889,18 @@ $(".condition").each(function(){
 		}
 	});
 });
-
+//是否在斜坡
+$(".slopeNo").change(function(){
+	var value = $(this).val();
+	console.log("斜坡起反应了"+value);
+	var name = $(this).attr("name");
+	if(value =="否"){
+		$("#"+name).parent().css("display","none")
+	}
+	else{
+		$("#"+name).parent().css("display","block")
+	}
+});
 function showModel() {
     document.getElementById('map').style.display = 'block';
 }
@@ -1001,13 +968,13 @@ function check() {
 		// 如果在这些input框中，判断是否能够为空
 		if ($(this).val() == "") {
 			// 排除哪些字段是可以为空的，并设置默认值为0
-			if(index == 19 || index == 20 || index ==22 || index == 23 || index == 24|| index == 25 || index == 27 || index == 28 ||
-					index == 29|| index == 30|| index == 31 || index == 35 || index == 36 || index == 37|| index == 38 || index == 39){
+			if(index == 18 || index == 19|| index ==21 || index == 22 || index == 23|| index == 24 || index == 26 || index == 27 ||
+					index == 28|| index == 29|| index == 30 || index == 34 || index == 35 || index == 36|| index == 37 || index == 38){
 				console.log("index="+index);
 				$(this).val("0");
 				return true;
 			}
-			if(index==46){
+			if(index==45){
 				$(this).val("--");
 				return true;
 			}
