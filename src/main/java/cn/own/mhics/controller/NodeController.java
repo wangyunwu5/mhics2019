@@ -148,34 +148,34 @@ public class NodeController {
 		 node.setProject(pro);
 		 node.setInsertDate(new Date());
 		 if(locationPhoto.length>0) {
-			 node.setLocationPhoto(imgus.uploadMore(locationPhoto));
+			 node.setLocationPhoto(imgus.uploadMore(locationPhoto,"locationPhoto"));
 		 }
 		 if(internalPhoto.length>0) {
-			 node.setInternalPhoto(imgus.uploadMore(internalPhoto));
+			 node.setInternalPhoto(imgus.uploadMore(internalPhoto,"internalPhoto"));
 		 }
 		 if(locationSketch.length>0) {
-			 node.setLocationSketch(imgus.uploadMore(locationSketch));
+			 node.setLocationSketch(imgus.uploadMore(locationSketch,"locationSketch"));
 		 }
 		 if(planofMh.length>0) {
-			 node.setPlanOfMh(imgus.uploadMore(planofMh));
+			 node.setPlanOfMh(imgus.uploadMore(planofMh,"planOfMh"));
 		 }
 		 if(coverPhoto.length>0) {
-			 node.setCoverPhoto(imgus.uploadMore(coverPhoto));
+			 node.setCoverPhoto(imgus.uploadMore(coverPhoto,"coverPhoto"));
 		 }
 		 if(ladderPhoto.length>0) {
-			 node.setLadderPhoto(imgus.uploadMore(ladderPhoto));
+			 node.setLadderPhoto(imgus.uploadMore(ladderPhoto,"ladderPhoto"));
 		 }
 		 if(shaftPhoto.length>0) {
-			 node.setShaftPhoto(imgus.uploadMore(shaftPhoto));
+			 node.setShaftPhoto(imgus.uploadMore(shaftPhoto,"shaftPhoto"));
 		 }
 		 if(chamberPhoto.length>0) {
-			 node.setChamberPhoto(imgus.uploadMore(chamberPhoto));
+			 node.setChamberPhoto(imgus.uploadMore(chamberPhoto,"chamberPhoto"));
 		 }
 		 if(benchingPhoto.length>0) {
-			 node.setBenchingPhoto(imgus.uploadMore(benchingPhoto));
+			 node.setBenchingPhoto(imgus.uploadMore(benchingPhoto,"benchingPhoto"));
 		 }
 		 if(otherPhoto.length>0) {
-			 node.setOthersPhoto(imgus.uploadMore(otherPhoto));
+			 node.setOthersPhoto(imgus.uploadMore(otherPhoto,"otherPhoto"));
 		 }
 		 //nodeService.save(node);
 		 return "redirect:nodemanage";
@@ -227,6 +227,10 @@ public class NodeController {
 		System.out.println("图片的List为:"+photoNew);
 		return photoNew;
 	}
-	
+	@RequestMapping(value="/imagedelete",method = RequestMethod.POST)
+	public void deleteimge(@RequestParam(value="imgpath")String imgPath,@RequestParam(value="nodeno",required=false)String nodeNo,Model model) {
+		
+		System.out.println("传来的参数图片路径和nodeid为："+imgPath+"+"+nodeNo);
+	}
 	
 }

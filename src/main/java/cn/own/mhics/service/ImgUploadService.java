@@ -28,13 +28,11 @@ public class ImgUploadService {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	public String uploadOne(MultipartFile file) throws IllegalStateException, IOException{
-		
+	public String uploadOne(MultipartFile file,String ziduanname) throws IllegalStateException, IOException{
 		File dir=new File(rootpath);
 		if(!dir.exists()){
 			dir.mkdirs();
 		}
-		
 		String fileName=file.getOriginalFilename();
 		if(!StringUtil.isEmpty(fileName)){
 			String suffix=FilenameUtils.getExtension(fileName);//获取文件后缀名
@@ -48,7 +46,6 @@ public class ImgUploadService {
 			return null;
 		}
 	}
-	
 	/**
 	 * 上传多张图片
 	 * @param file
@@ -56,7 +53,7 @@ public class ImgUploadService {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	public String uploadMore(MultipartFile[] file) throws IllegalStateException, IOException{
+	public String uploadMore(MultipartFile[] file,String ziduanname) throws IllegalStateException, IOException{
 		  File dir=new File(rootpath);
 		  if(!dir.exists()){ dir.mkdirs(); } 
 		  String  imgpath="";
@@ -66,7 +63,7 @@ public class ImgUploadService {
 				  String suffix=FilenameUtils.getExtension(fileName);//获取文件后缀名
 				  SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 				  String date = df.format(new Date());
-				  String newFileName = "mhics"+date+i+ "a." + suffix;
+				  String newFileName = ziduanname+date+i+ "a." + suffix;
 				  File targetFile = new File(dir,newFileName);
 				  file[i].transferTo(targetFile);
 				  if(i+1>=file.length)
@@ -82,6 +79,4 @@ public class ImgUploadService {
 		  System.out.println("新添图片路径为为："+imgpath);
 		  return imgpath;
 	}
-	 
-	 
 }

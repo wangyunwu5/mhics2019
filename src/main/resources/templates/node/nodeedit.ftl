@@ -130,12 +130,14 @@ a:hover {
 							<a href="javascript:history.back();" class="label label-default" style="padding: 5px;">
 								<i class="glyphicon glyphicon-chevron-left"></i> <span>返回</span>
 							</a>
-							<a href="#" class="label xiugai" style="margin-left:20px;">
-									<span class="glyphicon glyphicon-edit"></span>修改</a>
+							<#if node??>
+							<a href="#" id="to_xiugai" class="label xiugai" style="margin-left:20px;">
+									<span id="xiugai_span" class="glyphicon glyphicon-edit"></span><span id="xiugai_title">修改</span></a>
+							</#if>
 						</h3>
 					</div>
 					<!--盒子身体1-->
-					<div class="box-body no-padding" style="display:${(bodyone)!''}">
+					<div class="box-body no-padding bodyone" style="display:${(bodyone)!''}">
 						<div class="box-body">
 							<div class="alert alert-danger alert-dismissable" role="alert"
 								style="display: none;">
@@ -370,7 +372,7 @@ a:hover {
 						</div>
 					</div>
 					<!--盒子身体2-->
-					<div class="box-body no-padding" style="display:${(bodytwo)!''}">
+					<div class="box-body no-padding bodytwo" style="display:${(bodytwo)!''}">
 						<div class="box-body">
 							<div class="alert alert-danger alert-dismissable" role="alert"
 								style="display: none;">
@@ -735,8 +737,13 @@ a:hover {
 											 	<input type="file" name="locationphoto" multiple accept = 'image/gif,image/jpeg,image/jpg,image/png'
 												style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
 												<input class="imgpath" type="hidden" value="${(node.locationPhoto)!''}"/>
+												<input class="nodeno" type="hidden" value="${(node.nodeNo)!''}"/>
 											</div>
 											<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+											<#if node?? & node.locationPhoto?? & node.locationPhoto!=''>
+											<a href="#" id="xiugai" class="label xiugai" style="margin-left:20px;">
+											<span class="glyphicon glyphicon-edit"></span>修改</a>
+											</#if>
 										</div>
 								</div>
 								<div class="col-md-12 form-group ">
@@ -749,6 +756,10 @@ a:hover {
 												<input class="imgpath" type="hidden" value="${(node.internalPhoto)!''}"/>
 											</div>
 											<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+											<#if node?? & node.internalPhoto?? & node.internalPhoto!=''>
+											<a href="#" id="xiugai" class="label xiugai" style="margin-left:20px;">
+											<span class="glyphicon glyphicon-edit"></span>修改</a>
+											</#if>
 										</div>
 								</div>
 								<div class="col-md-12 form-group ">
@@ -835,7 +846,7 @@ a:hover {
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
 								</div>
-								<div class="col-md-12 form-group " style="display:none">
+								<div class="col-md-12 form-group" style="display:none">
 									<label class="control-label"><span>others photo</span></label> 
 									<div class="form-group biankuang" id="othersCondition">
 										<div class="btn btn-default" style="position: relative; overflow: hidden;">
@@ -847,6 +858,29 @@ a:hover {
 										<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 管道信息 -->
+					<div class="box-body no-padding" >
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-12 form-group">管道信息</div>
+								<div class="col-md-12 form-group">
+									<div class="col-md-1 form-group">管道编号</div>
+									<div class="col-md-1 form-group">管道类型</div>
+									<div class="col-md-2 form-group">管道尺寸(长 or半径)</div>
+									<div class="col-md-1 form-group">管道尺寸(宽)</div>
+									<div class="col-md-1 form-group">backdrop</div>
+									<div class="col-md-1 form-group">管道物料</div>
+									<div class="col-md-1 form-group">lining</div>
+									<div class="col-md-1 form-group">pipe depth</div>
+									<div class="col-md-1 form-group"></div>
+									<div class="col-md-1 form-group">10</div>
+									<div class="col-md-1 form-group">11</div>
+									<div class="col-md-1 form-group">12</div>
+								</div> 
+								
 							</div>
 						</div>
 					</div>
@@ -940,7 +974,19 @@ function searchByStationName() {
 	});
 	localSearch.search(keyword);
 }
-
+$('#to_xiugai').on('click',function(){
+	var value = $('.bodyone').css('display');
+	console.log("value="+value);
+	if(value=="block"){
+		$('.bodyone').css('display', 'none');
+		$('.bodytwo').css('display', 'block');
+		$(this).css('border','1px solid #337ab7');
+	}else{
+		$('.bodyone').css('display', 'block');
+		$('.bodytwo').css('display', 'none');
+		$(this).css('border','none');
+	}
+});
 $('.only-nodeno').on('blur',function(){
 	$.post("onlynodeno",{"nodeno":$(this).val()},function(data){
 		console.log("唯一编号数据："+data);

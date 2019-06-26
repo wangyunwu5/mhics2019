@@ -8,6 +8,9 @@
    this.isfold = true;
    //后台传来的地址值
    this.imgpath='';
+   //删除的图片地址
+   this.deletepath=[];
+   this.nodeno='';
    //是否显示图片按钮
    this.isShow=false;
    // 上传url 
@@ -39,7 +42,7 @@
                     '</div>' + 
                     '<div class="upload_main">' + 
                       '<div id="file_'+containerId+'"></div>'+
-                      '<div class="upload_preview">' + 
+                      '<div class="upload_preview none" id="have_img">' + 
                       	'<ul id="have_'+containerId+'" name="testclass"></ul>'+
                       '</div>' +
                       '<div class="upload_preview none">' + 
@@ -83,19 +86,35 @@
     		   self.deleteFile(parseInt(a));
     	   }
         });
+      
       this.imgpath=$(this.container).find('.imgpath').val();
+      this.nodeno=$(this.container).find('.nodeno').val();
       if(this.imgpath!=''&&this.imgpath!='null'){
-    	  console.log("获取后台下传的图片地址为："+this.imgpath);
+    	  console.log("imgpath:"+this.imgpath);
     	  var imgpathlist=this.imgpath.split(",");
     	  self.showImage(imgpathlist);
+    	  $('#have_img').removeClass('none');
       }
+      
+      $(this.container).on('click', '#xiugai', function() {
+    	$('#have_'+self.containerId).find('.img_delete').removeClass('none');
+      });
+      
+      $(this.container).on('click','.img_delete',function(){
+    	  var value=$(this).attr('date-index');
+    	  $.post('/node/imagedelete',{"imgpath":value,"nodeno":self.nodeno},function(data){
+    		  console.log(data);
+    	  });
+    	  console.log('点击了删除'+value+' nodeNo:'+self.nodeno);
+      });
+      
     },
     funGetFiles: function(e) {
         // 获取被选择的文件对象列表
         var files = e.target.files || e.dataTransfer.files;
         // 继续添加文件 调用filter方法
         var files = this.filter(files);
-        this.fileFilter = this.fileFilter.concat(files);
+        this.fileFilter = this.fileFilter.concat(files); 
         // 选择文件的处理
         this.dealFiles();
         return this;
@@ -177,22 +196,21 @@
     	let html = '';
     	console.log("数组长度为"+imgpaths.length);
     	for(let i=0;i<imgpaths.length;i++){
-    		console.log("进来了"+i);
+    		console.log("进来了"+i+"与"+imgpaths[i]);
     		html +='<li id="'+i+'" class="upload_append_list">'+
-			'<p><span href="#" class="upload_delete" title="删除" date-index="aaa'+i+'"></span>'+
-			'<em><img id="showimg_'+i+'" src="/image/'+imgpath+'" class="upload_image"/></em></p>'+
-			'<a class="filename" title="'+imgpath+'">'+imgpath+'</a></li>';;
+			'<p><span href="javascript:void(0)" class="img_delete none" title="删除" date-index="'+imgpaths[i]+'"></span>'+
+			'<em><img id="showimg_'+i+'" src="/image/'+imgpaths[i]+'" class="upload_image"/></em></p></li>';
     	}
       	var name=$('#have_'+self.containerId).attr("name");
     	console.log("该元素name为"+name+"containerId:"+self.containerId);
     	$("#have_"+self.containerId).html(html);
     },
     // 删除对应的文件
-    deleteFile: function(index) {
+    deleteFile: function(index){
       // 清空input输入框的值
       $("#form_"+this.containerId + ' input[type="file"]').eq(0).val('');
       $(this.container + " #uploadList_" + index).eq(0).fadeOut();
-      // 重新设置隐藏域的值
+      // 重新设置隐藏域的值 
       this.resetSetValue(index);
       this.listCls();
       // 删除回调 
@@ -203,7 +221,7 @@
       if (arrs.length) {
         for (var i = 0, ilen = arrs.length; i < ilen; i++) {
           if (arrs[i].index == index) {
-            return i;
+            return i; 
           }
         }
       }
