@@ -127,16 +127,16 @@ public class Node {
 	private String planOfMh;
 	
 	@Column(name="depth_of_flow")
-	private float depthOfFlow;
+	private double depthOfFlow;
 	
 	@Column(name="depth_of_silt")
-	private float depthOfSilt;
+	private double depthOfSilt;
 	
 	@Column(name="height_surch")
-	private float heightSurch;
+	private double heightSurch;
 	
 	@Column(name="mh_depth")
-	private float mhDepth;
+	private double mhDepth;
 	
 	@Column(name="zbx")
 	private String zbx;
@@ -221,8 +221,7 @@ public class Node {
 	
 	@Column(name="insert_date")
 	private Date insertDate;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name="insert_man_id")
 	private Person insertMan;
@@ -515,35 +514,35 @@ public class Node {
 		this.planOfMh = planOfMh;
 	}
 
-	public float getDepthOfFlow() {
+	public double getDepthOfFlow() {
 		return depthOfFlow;
 	}
 
-	public void setDepthOfFlow(float depthOfFlow) {
+	public void setDepthOfFlow(double depthOfFlow) {
 		this.depthOfFlow = depthOfFlow;
 	}
 
-	public float getDepthOfSilt() {
+	public double getDepthOfSilt() {
 		return depthOfSilt;
 	}
 
-	public void setDepthOfSilt(float depthOfSilt) {
+	public void setDepthOfSilt(double depthOfSilt) {
 		this.depthOfSilt = depthOfSilt;
 	}
 
-	public float getHeightSurch() {
+	public double getHeightSurch() {
 		return heightSurch;
 	}
 
-	public void setHeightSurch(float heightSurch) {
+	public void setHeightSurch(double heightSurch) {
 		this.heightSurch = heightSurch;
 	}
 
-	public float getMhDepth() {
+	public double getMhDepth() {
 		return mhDepth;
 	}
 
-	public void setMhDepth(float mhDepth) {
+	public void setMhDepth(double mhDepth) {
 		this.mhDepth = mhDepth;
 	}
 

@@ -45,7 +45,7 @@ a:hover {
 							<th scope="col">井类型</th>
 							<th scope="col">井用途</th>
 							<th scope="col">目前状态</th>
-							<th scope="col">建造年份</th>
+							<th scope="col">铺设年份</th>
 							<th scope="col">操作</th>
 						</tr>
 						<#list nodes as node>
