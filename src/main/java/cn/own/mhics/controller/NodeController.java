@@ -85,55 +85,127 @@ public class NodeController {
 			 @RequestParam(value = "benchingphoto") MultipartFile[] benchingPhoto,@RequestParam(value = "otherphoto") MultipartFile[] otherPhoto,Pipes pipes) throws IllegalStateException, IOException {
 		 System.out.println("当前的登录的用户id为："+session.getAttribute("userId"));
 
-		 System.out.println("node"+node.getShaftSizek());
-		 Long userId =(Long) session.getAttribute("userId"); 
+		 System.out.println("管道数据长度"+pipes.getPipe().size());
+		 Long userId =(Long) session.getAttribute("userId");
 		 Person person = personService.getOneUser(userId);
 		 Project pro = projectService.findOne(projectId);
-		 zuoBiao=zuoBiao.replace("--","");
-		 if(!("".equals(zuoBiao))) {
-			 String[] zb = zuoBiao.split(","); 
-			 node.setZbx(zb[0]);
-			 node.setZby(zb[1]); 
+		 //修改
+		 if(node.getNodeId()!=null) {
+			 Node nodeNew = nodeService.getOneNode(node.getNodeId());
+			 nodeNew.setNodeNo(node.getNodeNo());
+			 nodeNew.setProject(pro);
+			 nodeNew.setWorkNo(node.getWorkNo());
+			 nodeNew.setIdmsManholeId(node.getIdmsManholeId());
+			 nodeNew.setDsdRef(node.getDsdRef());
+			 nodeNew.setDrainageAreaCode(node.getDrainageAreaCode());
+			 zuoBiao=zuoBiao.replace("--","");
+			 if(!("".equals(zuoBiao))) {
+				 String[] zb = zuoBiao.split(","); 
+					 for(int i=0;i<zb.length;i++) {
+						 node.setZbx(zb[i]);
+						 node.setZby(zb[i]); 
+					 }
+			 }
+			 nodeNew.setYearLaid(node.getYearLaid());
+			 nodeNew.setStatus(node.getStatus());
+			 nodeNew.setFunction(node.getFunction());
+			 nodeNew.setNodeType(node.getNodeType());
+			 nodeNew.setCoverType(node.getCoverType());
+			 nodeNew.setCoverShape(node.getCoverShape());
+			 nodeNew.setHinged(node.getHinged());
+			 nodeNew.setLocked(node.getLocked());
+			 nodeNew.setCoverDuty(node.getCoverDuty());
+			 nodeNew.setCoverSizec(node.getCoverSizec());
+			 nodeNew.setCoverSizek(node.getCoverSizek());
+			 nodeNew.setCoverLevel(node.getCoverLevel());
+			 nodeNew.setShaftSideEntry(node.getShaftSideEntry());
+			 nodeNew.setShaftRegularCourse(node.getShaftRegularCourse());
+			 nodeNew.setShaftDepth(node.getShaftDepth());
+			 nodeNew.setShaftSizec(node.getShaftSizec());
+			 nodeNew.setShaftSizek(node.getShaftSizek());
+			 nodeNew.setChamberSoffit(node.getChamberSoffit());
+			 nodeNew.setChamberSteps(node.getChamberSteps());
+			 nodeNew.setChamberLadders(node.getChamberLadders());
+			 nodeNew.setChamberLndgs(node.getChamberLndgs());
+			 nodeNew.setChamberSizec(node.getChamberSizec());
+			 nodeNew.setChamberSizek(node.getChamberSizek());
+			 nodeNew.setToxic(node.getToxic());
+			 nodeNew.setVermin(node.getVermin());
+			 nodeNew.setConstructCode(node.getConstructCode());
+			 nodeNew.setLocation(node.getLocation());
+			 nodeNew.setLocationPhoto(node.getLocationPhoto());
+			 nodeNew.setInternalPhoto(node.getInternalPhoto());
+			 nodeNew.setLocationSketch(node.getLocationSketch());
+			 nodeNew.setPlanOfMh(node.getPlanOfMh());
+			 nodeNew.setDepthOfFlow(node.getDepthOfFlow());
+			 nodeNew.setDepthOfSilt(node.getDepthOfSilt());
+			 nodeNew.setHeightSurch(node.getHeightSurch());
+			 nodeNew.setMhDepth(node.getMhDepth());
+			 nodeNew.setUtr(node.getUtr());
+			 nodeNew.setUtl(node.getUtl());
+			 nodeNew.setUtga(node.getUtga());
+			 nodeNew.setUts(node.getUts());
+			 nodeNew.setJetting(node.getJetting());
+			 nodeNew.setOnSlope(node.getOnSlope());
+			 nodeNew.setSlopeNo(node.getSlopeNo());
+			 nodeNew.setCoverCondition(node.getCoverCondition());
+			 nodeNew.setLadderCondition(node.getLadderCondition());
+			 nodeNew.setShaftCondition(node.getShaftCondition());
+			 nodeNew.setChamberCondition(node.getChamberCondition());
+			 nodeNew.setBenchingCondition(node.getBenchingCondition());
+			 nodeNew.setOthersCondition(node.getOthersCondition());
+			 nodeNew.setCctvCond(node.getCctvCond());
+			 nodeNew.setCrity(node.getCrity());
+			 nodeNew.setRecordPlanDifference(node.getRecordPlanDifference());
+			 nodeNew.setRemark(node.getRemark());
+			 nodeNew.setInsertDate(node.getInsertDate());
+			 nodeNew.setInsertMan(person);
+			//nodeService.save(nodeNew);
 		 }
-		 node.setInsertMan(person);
-		 node.setProject(pro);
-		 node.setInsertDate(new Date());
-		 if(locationPhoto.length>0) {
-			 node.setLocationPhoto(imgus.uploadMore(locationPhoto,"locationPhoto"));
+		 //新增
+		 else {
+			 node.setInsertMan(person);
+			 node.setProject(pro);
+			 node.setInsertDate(new Date());
+			 if(locationPhoto!=null && locationPhoto.length>0) {
+				 node.setLocationPhoto(imgus.uploadMore(locationPhoto,"locationPhoto"));
+			 }
+			 if(internalPhoto!=null && internalPhoto.length>0) {
+				 node.setInternalPhoto(imgus.uploadMore(internalPhoto,"internalPhoto"));
+			 }
+			 if(locationSketch.length>0 && locationSketch!=null) {
+				 node.setLocationSketch(imgus.uploadMore(locationSketch,"locationSketch"));
+			 }
+			 if(planofMh.length>0 && planofMh!=null) {
+				 node.setPlanOfMh(imgus.uploadMore(planofMh,"planOfMh"));
+			 }
+			 if(coverPhoto.length>0 && coverPhoto!=null) {
+				 node.setCoverPhoto(imgus.uploadMore(coverPhoto,"coverPhoto"));
+			 }
+			 if(ladderPhoto.length>0 && ladderPhoto!=null) {
+				 node.setLadderPhoto(imgus.uploadMore(ladderPhoto,"ladderPhoto"));
+			 }
+			 if(shaftPhoto.length>0 && shaftPhoto!=null) {
+				 node.setShaftPhoto(imgus.uploadMore(shaftPhoto,"shaftPhoto"));
+			 }
+			 if(chamberPhoto.length>0 && chamberPhoto!=null) {
+				 node.setChamberPhoto(imgus.uploadMore(chamberPhoto,"chamberPhoto"));
+			 }
+			 if(benchingPhoto.length>0 && benchingPhoto!=null) {
+				 node.setBenchingPhoto(imgus.uploadMore(benchingPhoto,"benchingPhoto"));
+			 }
+			 if(otherPhoto.length>0 && otherPhoto!=null) {
+				 node.setOthersPhoto(imgus.uploadMore(otherPhoto,"otherPhoto"));
+			 }
+			 //nodeService.save(node);
 		 }
-		 if(internalPhoto.length>0) {
-			 node.setInternalPhoto(imgus.uploadMore(internalPhoto,"internalPhoto"));
-		 }
-		 if(locationSketch.length>0) {
-			 node.setLocationSketch(imgus.uploadMore(locationSketch,"locationSketch"));
-		 }
-		 if(planofMh.length>0) {
-			 node.setPlanOfMh(imgus.uploadMore(planofMh,"planOfMh"));
-		 }
-		 if(coverPhoto.length>0) {
-			 node.setCoverPhoto(imgus.uploadMore(coverPhoto,"coverPhoto"));
-		 }
-		 if(ladderPhoto.length>0) {
-			 node.setLadderPhoto(imgus.uploadMore(ladderPhoto,"ladderPhoto"));
-		 }
-		 if(shaftPhoto.length>0) {
-			 node.setShaftPhoto(imgus.uploadMore(shaftPhoto,"shaftPhoto"));
-		 }
-		 if(chamberPhoto.length>0) {
-			 node.setChamberPhoto(imgus.uploadMore(chamberPhoto,"chamberPhoto"));
-		 }
-		 if(benchingPhoto.length>0) {
-			 node.setBenchingPhoto(imgus.uploadMore(benchingPhoto,"benchingPhoto"));
-		 }
-		 if(otherPhoto.length>0) {
-			 node.setOthersPhoto(imgus.uploadMore(otherPhoto,"otherPhoto"));
-		 }
-		 //nodeService.save(node);
+	
 		 return "redirect:nodemanage";
 	 } 
 	  @RequestMapping(value="/mynode") 
-	 public String getMyNode(Model model) {
-		  List<Node> nodeList=nodeService.getMyNode(1L);
+	 public String getMyNode(Model model,HttpSession session) {
+		  Long userId =(Long) session.getAttribute("userId");
+		  List<Node> nodeList=nodeService.getMyNode(userId);
 		  model.addAttribute("nodes",nodeList);  
 		  return "node/nodemanage";
 	}
@@ -179,9 +251,13 @@ public class NodeController {
 		return photoNew;
 	}
 	@RequestMapping(value="/imagedelete",method = RequestMethod.POST)
-	public void deleteimge(@RequestParam(value="imgpath")String imgPath,@RequestParam(value="nodeno",required=false)String nodeNo,Model model) {
+	public void deleteImge(@RequestParam(value="imgpath")String imgPath,@RequestParam(value="nodeno",required=false)String nodeNo,Model model) {
 		
 		System.out.println("传来的参数图片路径和nodeid为："+imgPath+"+"+nodeNo);
+	}
+	
+	public void pipeEdit(Pipes pipes,Node node) {
+		
 	}
 	
 }

@@ -174,13 +174,13 @@ a:hover {
 					<#else>
 					<!--盒子身体3-->
 						<div class="box-body no-padding bodythree" style="display:${(bodythree)!''}">
-								<#include "nodeadd.ftl">
+							<#include "nodeadd.ftl">
 						</div>
 					</#if>
 					<!--盒子尾-->
-					<div class="box-body no-padding" >
-						<#include "nodeimgupload.ftl">
-					</div>
+						<div class="box-body no-padding" >
+							<#include "nodeimgupload.ftl">
+						</div>
 					<!-- 管道信息 -->
 					<div class="box-body no-padding " >
 						<div class="box-body ">
@@ -188,8 +188,11 @@ a:hover {
 								<div class="col-md-12 form-group">
 									<label class="control-label">
 										<span>管道信息</span>
-										<a href="javascript:;" class="label label-success addpipe" style="padding: 5px;">
+										<a href="javascript:;" class="label label-success addpipe" style="padding: 5px;margin-left:10px;">
 											<span class="glyphicon glyphicon-plus"></span> 新增管道
+										</a>
+										<a href="javascript:;" class="label  deletepipe" style="background-color:#d9534f;padding: 5px;margin-left:10px;">
+											<span class="glyphicon glyphicon-remove"></span> 删除管道
 										</a>
 									</label> 
 									<div class="form-group biankuang" >
@@ -225,16 +228,16 @@ a:hover {
 													<td><input name="pipe[0].pipeShape" class="" value="" placeholder="待输入"/></td>
 													<td>
 														<div class="pipetype-table" style="width:100%" >
-															<div style="width:45%"><input name="pipe[0].pipeSizec" class="" value="" placeholder="长或半径"/></div>
+															<div style="width:45%"><input name="pipe[0].pipeSizec" class="" value="0" placeholder="长或半径"/></div>
 															<div class="pipetype-table-x">X</div>
-															<div style="width:45%"><input name="pipe[0].pipeSizek" class="" value="" placeholder="宽"/></div>
+															<div style="width:45%"><input name="pipe[0].pipeSizek" class="" value="0" placeholder="宽"/></div>
 														</div>
 													</td>
-													<td><input name="pipe[0].backDrop" class="" value="" placeholder="待输入"/></td>
+													<td><input name="pipe[0].backDrop" class="" value="0" placeholder="待输入"/></td>
 													<td><input name="pipe[0].pipeMaterial" class="" value="" placeholder="待输入"/></td>
 													<td><input name="pipe[0].lining" class="" value="" placeholder="待输入"/></td>
-													<td><input name="pipe[0].pipeDepth" class="" value="" placeholder="待输入"/></td>
-													<td><input name="pipe[0].invert" class="" value="--"/></td>
+													<td><input name="pipe[0].pipeDepth" class="" value="0" placeholder="待输入"/></td>
+													<td><input name="pipe[0].invert" class="" value="0"/></td>
 													<td><input name="pipe[0].photo" class="" value="" placeholder="待输入"/></td>
 													<td><input name="pipe[0].wallNo" class="" value="--"/></td>
 													<td><input name="pipe[0].location" class="" value="--" /></td>

@@ -10,8 +10,8 @@
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
 					<input class="imgpath" type="hidden"
-						value="${(node.locationPhoto)!''}" /> <input class="nodeno"
-						type="hidden" value="${(node.nodeNo)!''}" />
+						value="${(node.locationPhoto)!''}" /> <input name="lopho-delpath" class="deletepath"
+						type="hidden" value="aaaaa" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 				<#if node?? & node.locationPhoto?? & node.locationPhoto!=''> <a
@@ -54,6 +54,11 @@
 						value="${(node.locationSketch)!''}" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.locationSketch?? & node.locationSketch!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group">

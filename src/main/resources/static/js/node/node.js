@@ -98,7 +98,6 @@ $('.only-nodeno').focus(function(){
 //添加管道事件
 $('.addpipe').on('click',function(){
 	var td=$('.pipe-table-body').find('tr:last').find('td').eq(0);
-	console.log('添加管道');
 	var i=Number(td.text())+1;
 	var a=Number(td.text());
 	console.log("文字内容为："+i);
@@ -112,14 +111,17 @@ $('.addpipe').on('click',function(){
 			'<td><input name="pipe['+a+'].pipeMaterial" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].lining" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].pipeDepth" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].invert" class="" value="--"/></td>'+
+			'<td><input name="pipe['+a+'].invert" class="" value="0"/></td>'+
 			'<td><input name="pipe['+a+'].photo" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].wallNo" class="" value="--"/></td>'+
 			'<td><input name="pipe['+a+'].location" class="" value="--"/></td>'+
 			'</tr>';
 	$('#pipe-table').find('tbody').append(tr);
 });
-
+//删除管道事件
+$('.deletepipe').on('click',function(){
+	$('#pipe-table').find('tbody tr:last').remove();
+});
 function alertCheck(errorMess){
 	$('.alert-danger').css('display', 'block');
 	// 提示框的错误信息显示

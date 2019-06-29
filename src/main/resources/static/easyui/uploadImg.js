@@ -9,8 +9,7 @@
    //后台传来的地址值
    this.imgpath='';
    //删除的图片地址
-   this.deletepath=[];
-   this.nodeno='';
+   this.deletepath='';
    //是否显示图片按钮
    this.isShow=false;
    // 上传url 
@@ -88,7 +87,6 @@
         });
       
       this.imgpath=$(this.container).find('.imgpath').val();
-      this.nodeno=$(this.container).find('.nodeno').val();
       if(this.imgpath!=''&&this.imgpath!='null'){
     	  console.log("imgpath:"+this.imgpath);
     	  var imgpathlist=this.imgpath.split(",");
@@ -101,11 +99,10 @@
       });
       
       $(this.container).on('click','.img_delete',function(){
-    	  var value=$(this).attr('date-index');
-    	  $.post('/node/imagedelete',{"imgpath":value,"nodeno":self.nodeno},function(data){
-    		  console.log(data);
-    	  });
-    	  console.log('点击了删除'+value+' nodeNo:'+self.nodeno);
+    	  var path=$(this).attr('date-index');
+    	  var value=$(self.container).find('.lopho-delpath').val();
+    	  $("#form_"+containerId).find('.lopho-delpath').val(value+','+path);
+    	  console.log('.lopho-delpath的value值为'+value);
       });
       
     },
