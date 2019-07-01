@@ -41,10 +41,10 @@
                     '</div>' + 
                     '<div class="upload_main">' + 
                       '<div id="file_'+containerId+'"></div>'+
-                      '<div class="upload_preview none" id="have_img">' + 
+                      '<div class="showimg upload_preview none" id="have_img">' + 
                       	'<ul id="have_'+containerId+'" name="testclass"></ul>'+
                       '</div>' +
-                      '<div class="upload_preview none">' + 
+                      '<div class="previewimg upload_preview none">' + 
                         '<ul id="preview_'+containerId+'"></ul>' + 
                       '</div>' +
                       '<div class="delete_submit none">' + 
@@ -91,20 +91,40 @@
     	  console.log("imgpath:"+this.imgpath);
     	  var imgpathlist=this.imgpath.split(",");
     	  self.showImage(imgpathlist);
-    	  $('#have_img').removeClass('none');
+    	  $(self.container).find('#have_img').removeClass('none');
       }
       
       $(this.container).on('click', '#xiugai', function() {
-    	$('#have_'+self.containerId).find('.img_delete').removeClass('none');
-      });
+    	  var theclass = $('#have_'+self.containerId).find('.img_delete').attr("class");
+    	  console.log("img_delete的class为"+theclass);
+    	  var sub = "none";
+    	  if(theclass.indexOf(sub) == -1){
+    		  console.log("没有none");
+    		  $('#have_'+self.containerId).find('.img_delete').addClass('none');
+    	  }
+    	  else{
+    		  console.log("有none");
+    	  $('#have_'+self.containerId).find('.img_delete').removeClass('none');
+    	  }
+    	  });
       
       $(this.container).on('click','.img_delete',function(){
     	  var path=$(this).attr('date-index');
-    	  var value=$(self.container).find('.lopho-delpath').val();
-    	  $("#form_"+containerId).find('.lopho-delpath').val(value+','+path);
-    	  console.log('.lopho-delpath的value值为'+value);
+    	  var value=$("#form_"+self.containerId).find('.deletepath').val();
+    	  console.log("匹配结果"+value.indexOf(path));
+    	  if(value!=null && value!=''){
+    		  if(value.indexOf(path) == -1){
+    			  $("#form_"+self.containerId).find('.deletepath').val(value+','+path);
+    		  }
+    		  else;
+    	  }
+    	  else{
+    		  $("#form_"+self.containerId).find('.deletepath').val(value+path);
+    	  }
+    	  $(this).parent().parent().css("opacity","0.4");
+    	  var value2=$("#form_"+self.containerId).find('.deletepath').val();
+    	  console.log('.deletepath的value值为'+value2);
       });
-      
     },
     funGetFiles: function(e) {
         // 获取被选择的文件对象列表
@@ -195,65 +215,45 @@
     	for(let i=0;i<imgpaths.length;i++){
     		console.log("进来了"+i+"与"+imgpaths[i]);
     		html +='<li id="'+i+'" class="upload_append_list">'+
-			'<p><span href="javascript:void(0)" class="img_delete none" title="删除" date-index="'+imgpaths[i]+'"></span>'+
+			'<p><span href="javascript:void(0)" class="img_delete none" id="img_delete" title="删除" date-index="'+imgpaths[i]+'"></span>'+
 			'<em><img id="showimg_'+i+'" src="/image/'+imgpaths[i]+'" class="upload_image"/></em></p></li>';
     	}
       	var name=$('#have_'+self.containerId).attr("name");
     	console.log("该元素name为"+name+"containerId:"+self.containerId);
     	$("#have_"+self.containerId).html(html);
     },
-    // 删除对应的文件
     deleteFile: function(index){
-      // 清空input输入框的值
       $("#form_"+this.containerId + ' input[type="file"]').eq(0).val('');
       $(this.container + " #uploadList_" + index).eq(0).fadeOut();
-      // 重新设置隐藏域的值 
       this.resetSetValue(index);
       this.listCls();
-      // 删除回调 
       this.onDelete(index);
       return this;
     },
-    indexOf: function(index, arrs){
-      if (arrs.length) {
-        for (var i = 0, ilen = arrs.length; i < ilen; i++) {
-          if (arrs[i].index == index) {
-            return i; 
-          }
-        }
-      }
-      return -1;
-    },
     listCls: function() {
         if (this.fileFilter.length > 0) {
-          $(this.container).find('.upload_preview').removeClass('none');
+          $(this.container).find('.previewimg').removeClass('none');
           $(this.container).find('.delete_submit').removeClass('none');
         } else {
-          $(this.container).find('.upload_preview').addClass('none');
-          $(this.container).find('.delete_submit').addClass('none');
+        	$(this.container).find('.previewimg').addClass('none');
+            $(this.container).find('.delete_submit').addClass('none');
         }
       },
-    // 重新设置隐藏域的值
     resetSetValue: function(index) {
-      var hiddenValues = [];
       var index = this.indexOf(index, this.fileFilter);
       if (index !== -1) {
         this.fileFilter.splice(index, 1);
       }
-      if (this.fileFilter.length) {
-        for (var j = 0, jlen = this.fileFilter.length; j < jlen; j++) {
-          // 判断是否已经上传了
-          if (this.fileFilter[j].successStatus) {
-            var url = this.fileFilter[j].imgData ? this.fileFilter[j].imgData.url : '';
-            hiddenValues.push(url);
+    },
+    indexOf: function(index, arrs){
+        if (arrs.length) {
+          for (var i = 0, ilen = arrs.length; i < ilen; i++) {
+            if (arrs[i].index == index) {
+              return i; 
+            }
           }
         }
-      }
-      if (hiddenValues.length >= 2) {
-        $("#form_"+this.containerId + ' input[type="hidden"]').val(hiddenValues.join(',').replace(/,/g, '|'));
-      } else {
-        $("#form_"+this.containerId + ' input[type="hidden"]').val(hiddenValues.join(','));
-      }
-    }
+        return -1;
+     }
  };
  window.UploadImg = UploadImg;

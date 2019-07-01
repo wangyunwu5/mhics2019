@@ -9,9 +9,9 @@
 						name="locationphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.locationPhoto)!''}" /> <input name="lopho-delpath" class="deletepath"
-						type="hidden" value="aaaaa" />
+					<input name="lophopath" class="imgpath" type="hidden"
+						value="${(node.locationPhoto)!''}" /> <input name="lophodelpath" class="deletepath"
+						type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 				<#if node?? & node.locationPhoto?? & node.locationPhoto!=''> <a
@@ -30,8 +30,8 @@
 						name="internalphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.internalPhoto)!''}" />
+					<input name="inphopath" class="imgpath" type="hidden" value="${(node.internalPhoto)!''}" />
+					<input name="inphodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 				<#if node?? & node.internalPhoto?? & node.internalPhoto!=''> <a
@@ -50,8 +50,8 @@
 						name="locationsketch" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.locationSketch)!''}" />
+					<input name="loskepath" class="imgpath" type="hidden" value="${(node.locationSketch)!''}" />
+					<input name="loskedelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
 				<#if node?? & node.locationSketch?? & node.locationSketch!=''> <a
@@ -70,9 +70,15 @@
 						name="planofmh" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden" value="${(node.planOfMh)!''}" />
+					<input name="pompath" class="imgpath" type="hidden" value="${(node.planOfMh)!''}" />
+					<input name="pomdelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.planOfMh?? & node.planOfMh!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group " style="display: none">
@@ -84,10 +90,15 @@
 						name="coverphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.coverPhoto)!''}" />
+					<input name="cophopath" class="imgpath" type="hidden" value="${(node.coverPhoto)!''}" />
+					<input name="cophodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+					<#if node?? & node.coverPhoto?? & node.coverPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group " style="display: none">
@@ -99,10 +110,15 @@
 						name="ladderphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.ladderPhoto)!''}" />
+					<input name="laphopath" class="imgpath" type="hidden" value="${(node.ladderPhoto)!''}" />
+					<input name="laphodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.ladderPhoto?? & node.ladderPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group " style="display: none">
@@ -114,10 +130,16 @@
 						name="shaftphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.shaftPhoto)!''}" />
+					<input name="shphopath" class="imgpath" type="hidden" value="${(node.shaftPhoto)!''}" />
+					<input name="shphodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.shaftPhoto?? & node.shaftPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
+			</div>
 			</div>
 		</div>
 		<div class="col-md-12 form-group " style="display: none">
@@ -129,10 +151,15 @@
 						name="chamberphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.chamberPhoto)!''}" />
+					<input name="chphopath" class="imgpath" type="hidden" value="${(node.chamberPhoto)!''}" />
+					<input name="chphodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+					<#if node?? & node.chamberPhoto?? & node.chamberPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group " style="display: none">
@@ -144,10 +171,15 @@
 						name="benchingphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.benchingPhoto)!''}" />
+					<input name="bephopath" class="imgpath" type="hidden" value="${(node.benchingPhoto)!''}" />
+					<input name="bephodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.benchingPhoto?? & node.benchingPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 		<div class="col-md-12 form-group" style="display: none">
@@ -159,10 +191,15 @@
 						name="otherphoto" multiple
 						accept='image/gif,image/jpeg,image/jpg,image/png'
 						style="opacity: 0; position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%;">
-					<input class="imgpath" type="hidden"
-						value="${(node.othersPhoto)!''}" />
+					<input name="otphopath" class="imgpath" type="hidden" value="${(node.othersPhoto)!''}" />
+					<input name="otphodelpath" class="deletepath" type="hidden" value="" />
 				</div>
 				<p class="help-block photo-p">尺寸在512*512以内，大小在500KB以内</p>
+				<#if node?? & node.othersPhoto?? & node.othersPhoto!=''> <a
+					href="#" id="xiugai" class="label xiugai"
+					style="margin-left: 20px;"> <span
+					class="glyphicon glyphicon-edit"></span>修改
+				</a> </#if>
 			</div>
 		</div>
 	</div>

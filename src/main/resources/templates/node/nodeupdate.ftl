@@ -11,6 +11,7 @@
 				name="nodeNo" class="form-control only-nodeno"
 				value="${(node.nodeNo)!''}" /> <input type="hidden"
 				class="onlynodeno" value="" />
+				<input type="hidden" name="nodeId" value="${(node.nodeId)!''}"/>
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>项目编号</span></label> <select
@@ -43,7 +44,7 @@
 			<label class="control-label"><span>井坐标</span></label> <label>
 				<a href="#" class="togetmap" onClick="showModel()">去获取坐标</a>
 			</label> <input id="zuobiao" name="zuobiao" class="form-control"
-				value="${(node.zbx)!''}--${(node.zby)!''}" />
+				value="${(node.zbx)!''},${(node.zby)!''}" />
 		</div>
 		<div id="map">
 			<div class="model-content"><#include "map.ftl"></div>

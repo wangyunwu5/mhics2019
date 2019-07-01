@@ -79,4 +79,16 @@ public class ImgUploadService {
 		  System.out.println("新添图片路径为为："+imgpath);
 		  return imgpath;
 	}
+	public void deleteImg(String imgPaths) {
+		File dir=new File(rootpath);
+		String rootpathaa = rootpath;
+		if(!dir.exists()){ System.out.println("该文件夹路径不存在了");}
+		else {
+			String[] delPath = imgPaths.split(",");
+			for(int i = 0; i<delPath.length;i++) {
+				System.out.println("要删除的图片路径为"+delPath[i]);
+				new File(rootpathaa.replace("/", "\\")+"\\"+delPath[i]).delete();
+			}
+		}
+	}
 }

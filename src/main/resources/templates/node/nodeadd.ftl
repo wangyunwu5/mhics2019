@@ -14,12 +14,13 @@
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>项目编号</span></label>
-			<input	name="projectId" list="pro" class="form-control" value="" />
-			<datalist id="pro">
-				<#list projects as project>
-					<option value="${(project.projectNo)!''}"></option>
+			<select
+				class="form-control" name="projectId"
+				value="${(node.project.projectNo)!''}"> <#list projects as
+				project>
+				<option value="${(project.projectId)!''}">${(project.projectNo)!''}</option>
 				</#list>
-			</datalist>
+			</select>
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>工作编号</span></label> <input
@@ -79,7 +80,7 @@
 			<datalist id="nodeType">
 				<#list standards as standard> <#if standard.descriptionEn ==
 				"nodetype">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 			</datalist>
 		</div>
@@ -92,7 +93,7 @@
 			<input	name="coverShape" list="coverShape" class="form-control" value="" />
 			<datalist id="coverShape">
 				<#list standards as standard> <#if standard.descriptionEn == "covershape">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 			</datalist>
 		</div>
@@ -102,7 +103,7 @@
 				<datalist id="coverType">
 					<#list standards as standard> <#if standard.descriptionEn ==
 				"covertype">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 				</datalist>
 		</div>
@@ -126,7 +127,7 @@
 			<datalist id="coverDuty">
 				<#list standards as standard> <#if standard.descriptionEn ==
 				"coverduty">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 			</datalist>
 		</div>
@@ -174,7 +175,7 @@
 			<input	name="soffit" list="soffit" class="form-control" value="" />
 			<datalist id="soffit">
 				 <#list standards as standard> <#if standard.descriptionEn == "soffit">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 			</datalist>
 		</div>
@@ -223,7 +224,7 @@
 			<datalist id="conCode">
 				<#list standards as
 				standard> <#if standard.descriptionEn == "constructcode">
-				<option value="${(standard.codeSimple)!''}">${(standard.codeSimple)!''}</option>
+				<option value="${(standard.codeSimple)!''}"></option>
 				</#if> </#list>
 			</datalist>
 		</div>
