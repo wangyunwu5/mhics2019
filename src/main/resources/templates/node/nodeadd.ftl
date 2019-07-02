@@ -28,16 +28,16 @@
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>IDMS Manhole ID</span></label> <input
-				name="idmsManholeId" class="form-control"
+				name="idmsManholeId" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>DSD ref</span></label> <input
-				name="dsdRef" class="form-control" value="" />
+				name="dsdRef" class="form-control nocheck" value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>地图区域代码</span></label> <input
-				name="drainageAreaCode" class="form-control"
+				name="drainageAreaCode" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
@@ -133,13 +133,13 @@
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井盖尺寸(长或半径,mm)</span></label> <input
-				name="coverSizec" class="form-control"
+				name="coverSizec" class="form-control nocheck"
 				value="" />
 		</div>
 
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井盖尺寸(宽,mm)</span></label> <input
-				name="coverSizek" class="form-control"
+				name="coverSizek" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
@@ -152,22 +152,22 @@
 		</div>
 		<div class="col-md-1 form-group">
 			<label class="control-label"><span>井颈砖层数量</span></label> <input
-				name="shaftRegularCourse" class="form-control"
+				name="shaftRegularCourse" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井颈厚度(mm)</span></label> <input
-				name="shaftDepth" class="form-control"
+				name="shaftDepth" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井颈尺寸(长或半径,mm)</span></label> <input
-				name="shaftSizec" class="form-control"
+				name="shaftSizec" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井颈尺寸(宽,mm)</span></label> <input
-				name="shaftSizek" class="form-control"
+				name="shaftSizek" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
@@ -181,27 +181,27 @@
 		</div>
 		<div class="col-md-1 form-group">
 			<label class="control-label"><span>台阶数量</span></label> <input
-				name="chamberSteps" class="form-control"
+				name="chamberSteps" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
 			<label class="control-label"><span>梯子数量</span></label> <input
-				name="chamberLadders" class="form-control"
+				name="chamberLadders" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
 			<label class="control-label"><span>LNDGS</span></label> <input
-				name="chamberLndgs" class="form-control"
+				name="chamberLndgs" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井胆尺寸(长或半径,mm)</span></label> <input
-				name="chamberSizec" class="form-control"
+				name="chamberSizec" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-2 form-group">
 			<label class="control-label"><span>井胆尺寸(宽,mm)</span></label> <input
-				name="chamberSizek" class="form-control"
+				name="chamberSizek" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
@@ -249,7 +249,7 @@
 		</div>
 		<div class="col-md-1 form-group">
 			<label class="control-label"><span>海拔(m)</span></label> <input
-				name="coverLevel" class="form-control"
+				name="coverLevel" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
@@ -297,7 +297,7 @@
 		</div>
 		<div class="col-md-1 form-group" style="display: none">
 			<label class="control-label"><span>斜坡编号</span></label> <input
-				name="slopeNo" id="onSlope" class="form-control"
+				name="slopeNo" id="onSlope" class="form-control nocheck"
 				value="" />
 		</div>
 		<div class="col-md-1 form-group">
@@ -372,7 +372,7 @@
 		</div>
 		<div class="col-md-6 form-group">
 			<label class="control-label"><span>备注</span></label> <input
-				name="remark" class="form-control" value="" />
+				name="remark" class="form-control nocheck" value="" />
 		</div>
 	</div>
 </div>

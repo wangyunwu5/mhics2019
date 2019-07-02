@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.own.mhics.entity.DiaoChaNode;
 import cn.own.mhics.entity.Node;
 import cn.own.mhics.entity.Person;
+import cn.own.mhics.entity.Pipe;
 import cn.own.mhics.entity.Pipes;
 import cn.own.mhics.entity.Project;
 import cn.own.mhics.entity.Standard;
@@ -28,6 +29,7 @@ import cn.own.mhics.service.DiaoChaNodeService;
 import cn.own.mhics.service.ImgUploadService;
 import cn.own.mhics.service.NodeService;
 import cn.own.mhics.service.PersonService;
+import cn.own.mhics.service.PipeService;
 import cn.own.mhics.service.ProjectService;
 import cn.own.mhics.service.StandardService;
 
@@ -47,7 +49,8 @@ public class NodeController {
 	private PersonService personService;
 	@Autowired
 	private DiaoChaNodeService diaoChaNodeService;
-	
+	@Autowired
+	private PipeService pipeService;
 
 	@RequestMapping(value = "/nodemanage")
 	public String getAllNodes(Model model) {
@@ -61,6 +64,11 @@ public class NodeController {
 	 {
 		 if(nodeId!=null) {
 			 Node node = nodeService.getOneNode(nodeId);
+			 List<Pipe> pipes = pipeService.findPipesByNode(nodeId);
+			 if(pipes.size()>0) {
+				 model.addAttribute("pipes",pipes);
+				 System.out.println("nodeId为"+nodeId+"pipes有数据    "+pipes);
+			 }
 			 model.addAttribute("node",node);
 			 model.addAttribute("bodyone","block");
 			 model.addAttribute("bodytwo","none");
@@ -166,19 +174,19 @@ public class NodeController {
 			 nodeNew.setInsertDate(node.getInsertDate());
 			 nodeNew.setInsertMan(person);
 			 String lophonewpath = imgus.uploadMore(locationPhoto, "locationPhoto");
-			 if(lophoPath!=null && lophoPath!="") {
+			 if(lophoPath!=null && !lophoPath.trim().equals("")) {
 				 System.out.println("lophoPath有值");
-				 if(lophodelPath!=null && lophodelPath!="") {
+				 if(lophodelPath!=null && !lophodelPath.trim().equals("")) {
 					 System.out.println("lophodelPath有值");
 					 imgus.deleteImg(lophodelPath);
-					 if(lophonewpath!=null && lophonewpath!="") {
+					 if(lophonewpath!=null && !lophonewpath.trim().equals("")) {
 						 nodeNew.setLocationPhoto(delPathFromMysql(lophoPath,lophodelPath)+","+lophonewpath);
 					 }
 					 else
 						 nodeNew.setLocationPhoto(delPathFromMysql(lophoPath,lophodelPath));
 				 }
 				 else {
-					 if(lophonewpath!=null && lophonewpath!="") {
+					 if(lophonewpath!=null && !lophonewpath.trim().equals("")) {
 						 nodeNew.setLocationPhoto(lophoPath+","+lophonewpath);
 					 }
 					 else
@@ -187,25 +195,25 @@ public class NodeController {
 			 }
 			 else {
 				 System.out.println("lophoPath无值");
-				 if(lophonewpath!=null && lophonewpath!="") 
+				 if(lophonewpath!=null && !lophonewpath.trim().equals("")) 
 					 nodeNew.setLocationPhoto(lophonewpath);
 				 else;
 			 }
 			 
 			 String inphonewpath = imgus.uploadMore(internalPhoto, "internalPhoto");
-			 if(inphoPath!=null && inphoPath!="") {
+			 if(inphoPath!=null && !inphoPath.trim().equals("")) {
 				 System.out.println("inphoPath有值"+inphoPath+"啊啊啊啊");
-				 if(inphodelPath!=null && inphodelPath!="") {
+				 if(inphodelPath!=null && !inphodelPath.trim().equals("")) {
 					 System.out.println("inphodelPath有值"+inphodelPath+"啊啊啊啊");
 					 imgus.deleteImg(inphodelPath);
-					 if(inphonewpath!=null && inphonewpath!="") {
+					 if(inphonewpath!=null && !inphonewpath.trim().equals("")) {
 						 nodeNew.setInternalPhoto(delPathFromMysql(inphoPath,inphodelPath)+","+inphonewpath);
 					 }
 					 else
 						 nodeNew.setInternalPhoto(delPathFromMysql(inphoPath,inphodelPath));
 				 }
 				 else {
-					 if(inphonewpath!=null && inphonewpath!="") {
+					 if(inphonewpath!=null && !inphonewpath.trim().equals("")) {
 						 nodeNew.setInternalPhoto(inphoPath+","+inphonewpath);
 					 }
 					 else
@@ -214,25 +222,25 @@ public class NodeController {
 			 }
 			 else {
 				 System.out.println("inphoPath无值");
-				 if(inphonewpath!=null && inphonewpath!="") 
+				 if(inphonewpath!=null && !inphonewpath.trim().equals("")) 
 					 nodeNew.setInternalPhoto(inphonewpath);
 				 else;
 			 }
 			 
 			 String loskenewpath = imgus.uploadMore(locationSketch, "locationSketch");
-			 if(loskePath!=null && loskePath!="") {
+			 if(loskePath!=null && !loskePath.trim().equals("")) {
 				 System.out.println("loskePath有值");
-				 if(loskedelPath!=null && loskedelPath!="") {
+				 if(loskedelPath!=null && !loskedelPath.trim().equals("")) {
 					 System.out.println("loskedelPath有值");
 					 imgus.deleteImg(loskedelPath);
-					 if(loskenewpath!=null && loskenewpath!="") {
+					 if(loskenewpath!=null && !loskenewpath.trim().equals("")) {
 						 nodeNew.setLocationSketch(delPathFromMysql(loskePath,loskedelPath)+","+loskenewpath);
 					 }
 					 else
 						 nodeNew.setLocationSketch(delPathFromMysql(loskePath,loskedelPath));
 				 }
 				 else {
-					 if(loskenewpath!=null && loskenewpath!="") {
+					 if(loskenewpath!=null && !loskenewpath.trim().equals("")) {
 						 nodeNew.setLocationSketch(loskePath+","+loskenewpath);
 					 }
 					 else
@@ -241,25 +249,25 @@ public class NodeController {
 			 }
 			 else {
 				 System.out.println("loskePath无值");
-				 if(loskenewpath!=null && loskenewpath!="") 
+				 if(loskenewpath!=null && !loskenewpath.trim().equals("")) 
 					 nodeNew.setLocationSketch(loskenewpath);
 				 else;
 			 }
 			 
 			 String plnewpath = imgus.uploadMore(planofMh, "planofMh");
-			 if(pomPath!=null && pomPath!="") {
+			 if(pomPath!=null && !pomPath.trim().equals("")) {
 				 System.out.println("pomPath有值");
-				 if(pomdelPath!=null && pomdelPath!="") {
+				 if(pomdelPath!=null && !pomdelPath.trim().equals("")) {
 					 System.out.println("pomdelPath有值");
 					 imgus.deleteImg(pomdelPath);
-					 if(plnewpath!=null && plnewpath!="") {
+					 if(plnewpath!=null && !plnewpath.trim().equals("")) {
 						 nodeNew.setPlanOfMh(delPathFromMysql(pomPath,pomdelPath)+","+plnewpath);
 					 }
 					 else
 						 nodeNew.setPlanOfMh(delPathFromMysql(pomPath,pomdelPath));
 				 }
 				 else {
-					 if(plnewpath!=null && plnewpath!="") {
+					 if(plnewpath!=null && !plnewpath.trim().equals("")) {
 						 nodeNew.setPlanOfMh(pomPath+","+plnewpath);
 					 }
 					 else
@@ -268,25 +276,25 @@ public class NodeController {
 			 }
 			 else {
 				 System.out.println("lophoPath无值");
-				 if(plnewpath!=null && plnewpath!="") 
+				 if(plnewpath!=null && !plnewpath.trim().equals("")) 
 					 nodeNew.setPlanOfMh(plnewpath);
 				 else;
 			 }
 			 
 			 String conewpath = imgus.uploadMore(coverPhoto, "coverPhoto");
-			 if(cophoPath!=null && cophoPath!="") {
+			 if(cophoPath!=null && !cophoPath.trim().equals("")) {
 				 System.out.println("cophoPath有值");
-				 if(cophodelPath!=null && cophodelPath!="") {
+				 if(cophodelPath!=null && !cophodelPath.trim().equals("")) {
 					 System.out.println("cophodelPath有值");
 					 imgus.deleteImg(cophodelPath);
-					 if(conewpath!=null && conewpath!="") {
+					 if(conewpath!=null && !conewpath.trim().equals("")) {
 						 nodeNew.setCoverPhoto(delPathFromMysql(cophoPath,cophodelPath)+","+conewpath);
 					 }
 					 else
 						 nodeNew.setCoverPhoto(delPathFromMysql(cophoPath,cophodelPath));
 				 }
 				 else {
-					 if(conewpath!=null && conewpath!="") {
+					 if(conewpath!=null && !conewpath.trim().equals("")) {
 						 nodeNew.setCoverPhoto(cophoPath+","+conewpath);
 					 }
 					 else
@@ -295,23 +303,23 @@ public class NodeController {
 			 }
 			 else {
 				 System.out.println("cophoPath无值");
-				 if(conewpath!=null && conewpath!="") 
+				 if(conewpath!=null && !conewpath.trim().equals("")) 
 					 nodeNew.setCoverPhoto(conewpath);
 				 else;
 			 }
 			 
 			 String lanewpath = imgus.uploadMore(ladderPhoto, "ladderPhoto");
-			 if(laphoPath!=null && laphoPath!="") {
-				 if(laphodelPath!=null && laphodelPath!="") {
+			 if(laphoPath!=null && !laphoPath.trim().equals("")) {
+				 if(laphodelPath!=null && !laphodelPath.trim().equals("")) {
 					 imgus.deleteImg(laphodelPath);
-					 if(lanewpath!=null && lanewpath!="") {
+					 if(lanewpath!=null && !lanewpath.trim().equals("")) {
 						 nodeNew.setCoverPhoto(delPathFromMysql(laphoPath,laphodelPath)+","+lanewpath);
 					 }
 					 else
 						 nodeNew.setCoverPhoto(delPathFromMysql(laphoPath,laphodelPath));
 				 }
 				 else {
-					 if(lanewpath != null && lanewpath != "") {
+					 if(lanewpath != null && !lanewpath .trim().equals("")) {
 						 nodeNew.setCoverPhoto(laphoPath+","+lanewpath);
 					 }
 					 else
@@ -319,23 +327,23 @@ public class NodeController {
 				 }
 			 }
 			 else {
-				 if(lanewpath!=null && lanewpath!="") 
+				 if(lanewpath!=null && !lanewpath.trim().equals("")) 
 					 nodeNew.setCoverPhoto(lanewpath);
 				 else;
 			 }
 			 
 			 String shnewpath = imgus.uploadMore(shaftPhoto, "shaftPhoto");
-			 if(shphoPath!=null && shphoPath!="") {
-				 if(shphodelPath!=null && shphodelPath!="") {
+			 if(shphoPath!=null && !shphoPath.trim().equals("")) {
+				 if(shphodelPath!=null && !shphodelPath.trim().equals("")) {
 					 imgus.deleteImg(shphodelPath);
-					 if(shnewpath!=null && shnewpath!="") {
+					 if(shnewpath!=null && !shnewpath.trim().equals("")) {
 						 nodeNew.setLadderPhoto(delPathFromMysql(shphoPath,shphodelPath)+","+shnewpath);
 					 }
 					 else
 						 nodeNew.setLadderPhoto(delPathFromMysql(shphoPath,shphodelPath));
 				 }
 				 else {
-					 if(shnewpath!=null && shnewpath!="") {
+					 if(shnewpath!=null && !shnewpath.trim().equals("")) {
 						 nodeNew.setLadderPhoto(shphoPath+","+shnewpath);
 					 }
 					 else
@@ -343,23 +351,23 @@ public class NodeController {
 				 }
 			 }
 			 else {
-				 if(shnewpath!=null && shnewpath!="") 
+				 if(shnewpath!=null && !shnewpath.trim().equals("")) 
 					 nodeNew.setLadderPhoto(shnewpath);
 				 else;
 			 }
 			 
 			 String chnewpath = imgus.uploadMore(chamberPhoto, "chamberPhoto");
-			 if(chphoPath!=null && chphoPath!="") {
-				 if(chphodelPath!=null && chphodelPath!="") {
+			 if(chphoPath!=null && !chphoPath.trim().equals("")) {
+				 if(chphodelPath!=null && !chphodelPath.trim().equals("")) {
 					 imgus.deleteImg(chphodelPath);
-					 if(chnewpath!=null && chnewpath!="") {
+					 if(chnewpath!=null && !chnewpath.trim().equals("")) {
 						 nodeNew.setChamberPhoto(delPathFromMysql(chphoPath,chphodelPath)+","+chnewpath);
 					 }
 					 else
 						 nodeNew.setChamberPhoto(delPathFromMysql(chphoPath,chphodelPath));
 				 }
 				 else {
-					 if(chnewpath!=null && chnewpath!="") {
+					 if(chnewpath!=null && !chnewpath.trim().equals("")) {
 						 nodeNew.setChamberPhoto(chphoPath+","+chnewpath);
 					 }
 					 else
@@ -367,23 +375,23 @@ public class NodeController {
 				 }
 			 }
 			 else {
-				 if(chnewpath!=null && chnewpath!="") 
+				 if(chnewpath!=null && !chnewpath.trim().equals("")) 
 					 nodeNew.setChamberPhoto(chnewpath);
 				 else;
 			 }
 			 
 			 String benewpath = imgus.uploadMore(benchingPhoto, "benchingPhoto");
-			 if(bephoPath!=null && bephoPath!="") {
-				 if(bephodelPath!=null && bephodelPath!="") {
+			 if(bephoPath!=null && !bephoPath.trim().equals("")) {
+				 if(bephodelPath!=null && !bephodelPath.trim().equals("")) {
 					 imgus.deleteImg(bephodelPath);
-					 if(benewpath!=null && benewpath!="") {
+					 if(benewpath!=null && !benewpath.trim().equals("")) {
 						 nodeNew.setBenchingPhoto(delPathFromMysql(bephoPath,bephodelPath)+","+benewpath);
 					 }
 					 else
 						 nodeNew.setBenchingPhoto(delPathFromMysql(bephoPath,bephodelPath));
 				 }
 				 else {
-					 if(benewpath!=null && benewpath!="") {
+					 if(benewpath!=null && !benewpath.trim().equals("")) {
 						 nodeNew.setBenchingPhoto(bephoPath+","+benewpath);
 					 }
 					 else
@@ -391,23 +399,23 @@ public class NodeController {
 				 }
 			 }
 			 else {
-				 if(benewpath!=null && benewpath!="") 
+				 if(benewpath!=null && !benewpath.trim().equals("")) 
 					 nodeNew.setBenchingPhoto(benewpath);
 				 else;
 			 }
 			 
 			 String otnewpath = imgus.uploadMore(otherPhoto, "otherPhoto");
-			 if(otphoPath!=null && otphoPath!="") {
-				 if(otphodelPath!=null && otphodelPath!="") {
+			 if(otphoPath!=null && !otphoPath.trim().equals("")) {
+				 if(otphodelPath!=null && !otphodelPath.trim().equals("")) {
 					 imgus.deleteImg(otphodelPath);
-					 if(otnewpath!=null && otnewpath!="") {
+					 if(otnewpath!=null && !otnewpath.trim().equals("")) {
 						 nodeNew.setOthersPhoto(delPathFromMysql(otphoPath,otphodelPath)+","+otnewpath);
 					 }
 					 else
 						 nodeNew.setOthersPhoto(delPathFromMysql(otphoPath,otphodelPath));
 				 }
 				 else {
-					 if(otnewpath!=null && otnewpath!="") {
+					 if(otnewpath!=null && !otnewpath.trim().equals("")) {
 						 nodeNew.setOthersPhoto(otphoPath+","+otnewpath);
 					 }
 					 else
@@ -415,12 +423,12 @@ public class NodeController {
 				 }
 			 }
 			 else {
-				 if(otnewpath!=null && otnewpath!="") 
+				 if(otnewpath!=null && !otnewpath.trim().equals("")) 
 					 nodeNew.setOthersPhoto(otnewpath);
 				 else;
 			 }
-			 
 			nodeService.save(nodeNew);
+			pipeEdit(pipes,nodeNew);
 		 }
 		 //新增
 		 else {
@@ -435,7 +443,8 @@ public class NodeController {
 			 node.setInsertMan(person);
 			 node.setProject(pro);
 			 node.setInsertDate(new Date());
-			 if(locationPhoto!=null && locationPhoto.length>0) {
+			 if(!locationPhoto.equals(null) && locationPhoto.length>0) {
+				 System.out.println("locationPhoto进来了");
 				 node.setLocationPhoto(imgus.uploadMore(locationPhoto,"locationPhoto"));
 			 }
 			 if(internalPhoto!=null && internalPhoto.length>0) {
@@ -466,6 +475,8 @@ public class NodeController {
 				 node.setOthersPhoto(imgus.uploadMore(otherPhoto,"otherPhoto"));
 			 }
 			 nodeService.save(node);
+			 Node nodeNew = nodeService.findOneByNo(node.getNodeNo());
+			 pipeEdit(pipes,nodeNew);
 		 }
 	
 		 return "redirect:nodemanage";
@@ -506,6 +517,36 @@ public class NodeController {
 	}
 	
 	public void pipeEdit(Pipes pipes,Node node) {
+		System.out.println("进入pipe编辑方法");
+		System.out.println("pipelist的数据为"+pipes.getPipe());
+		List<Pipe> pipeList = pipes.getPipe();
+		for (Pipe pipe : pipeList) {
+			if(pipe.getPipeId()!=null) {
+				System.out.println("管道编号为"+pipe.getPipeId());
+				Pipe pipeOld = pipeService.findOnePipe(pipe.getPipeId());
+				pipeOld.setPipeNo(pipe.getPipeNo());
+				pipeOld.setPipeType(pipe.getPipeType());
+				pipeOld.setPipeShape(pipe.getPipeShape());
+				pipeOld.setNode(node);
+				pipeOld.setPipeSizec(pipe.getPipeSizec());
+				pipeOld.setPipeSizek(pipe.getPipeSizek());
+				pipeOld.setBackDrop(pipe.getBackDrop());
+				pipeOld.setPipeMaterial(pipe.getPipeMaterial());
+				pipeOld.setLining(pipe.getLining());
+				pipeOld.setPipeDepth(pipe.getPipeDepth());
+				pipeOld.setInvert(pipe.getInvert());
+				pipeOld.setPipePhoto(pipe.getPipePhoto());
+				pipeOld.setWallNo(pipe.getWallNo());
+				pipeOld.setPipeLocation(pipe.getPipeLocation());
+				pipeService.savePipe(pipeOld);
+			}
+			else {
+				System.out.println("该管道还不存在，正在添加");
+				pipe.setNode(node);
+				pipeService.savePipe(pipe);
+			}
+		}
+		
 		
 	}
 	//从数据库图片路径中删除掉已选择的路径

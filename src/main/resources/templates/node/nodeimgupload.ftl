@@ -21,7 +21,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group ">
+		<div class="col-md-12 form-group">
 			<label class="control-label"><span>internal photo</span></label>
 			<div class="form-group biankuang" id="container2">
 				<div class="btn btn-default"

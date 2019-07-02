@@ -114,7 +114,7 @@ $('.addpipe').on('click',function(){
 			'<td><input name="pipe['+a+'].invert" class="" value="0"/></td>'+
 			'<td><input name="pipe['+a+'].photo" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].wallNo" class="" value="--"/></td>'+
-			'<td><input name="pipe['+a+'].location" class="" value="--"/></td>'+
+			'<td><input name="pipe['+a+'].location" class="" value="--"/><input name="pipe['+a+'].pipeId" type="hidden" class="" value=""/></td>'+
 			'</tr>';
 	$('#pipe-table').find('tbody').append(tr);
 });
@@ -124,29 +124,17 @@ $('.deletepipe').on('click',function(){
 });
 function alertCheck(errorMess){
 	$('.alert-danger').css('display', 'block');
-	// 提示框的错误信息显示
 	$('.error-mess').text(errorMess);
 }
 //表单提交前执行的onsubmit()方法；返回false时，执行相应的提示信息；返回true就提交表单到后台校验与执行
 function check() {
 	console.log("开始进入了");
-	//提示框可能在提交之前是block状态，所以在这之前要设置成none
 	$('.alert-danger').css('display', 'none');
 	var isRight = 1;
 	$('.form-control').each(function(index) {
+		var css = $(this).attr("class");
 		// 如果在这些input框中，判断是否能够为空
-		if ($(this).val() == "") {
-			// 排除哪些字段是可以为空的，并设置默认值为0
-			if(index == 18 || index == 19|| index ==21 || index == 22 || index == 23|| index == 24 || index == 26 || index == 27 ||
-					index == 28|| index == 29|| index == 30 || index == 34 || index == 35 || index == 36|| index == 37 || index == 38){
-				console.log("index="+index);
-				$(this).val("0");
-				return true;
-			}
-			if(index==45){
-				$(this).val("--");
-				return true;
-			}
+		if ($(this).val() == "" && css.indexOf("nocheck")==-1) {
 			// 获取到input框的兄弟的文本信息，并对应提醒；
 			var brother = $(this).siblings('.control-label').text();
 			var errorMess = "[" + brother + "输入框信息不能为空]";

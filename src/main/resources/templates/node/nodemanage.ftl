@@ -31,7 +31,7 @@ a:hover {
 						<span class="glyphicon glyphicon-plus"></span> 新增
 					</a>
 					<a href="#" class="label label-success" style="padding: 5px;margin-left:10px;">
-						<span class="glyphicon glyphicon-plus"></span> 批量添加
+						<span class="glyphicon glyphicon-plus"></span> 导入excel表
 					</a>
 				</h3>
 			</div>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(value="investigation")
+@RequestMapping(value="/investigation")
 public class InvestigationController {
 	
 	
@@ -19,9 +19,9 @@ public class InvestigationController {
 		return "investigation/investigationmanage";
 	}
 	
-	@RequestMapping(value="/investigationedit",method=RequestMethod.GET)
-	public String investigationEdit(Model model) {
-		 
+	@RequestMapping(value="/makediaocha",method=RequestMethod.GET)
+	public String investigationEdit(Model model,@RequestParam(value="dcnodeid")Long dcNodeId) {
+		 System.out.println("进入生成报告方法");
 		return "investigation/investigationedit";
 	}
 	

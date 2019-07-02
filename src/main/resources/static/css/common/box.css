@@ -117,13 +117,13 @@
 }
 
 .liebiao {
-	color: #E1E100 !important;
+	color: #3c9ebf !important;
 }
 .liebiao:visited {
-	color: #E1E100 !important;
+	color: #3c9ebf !important;
 }
 .liebiao:hover{
-	background-color: #E1E100;
+	background-color: #3c9ebf;
 	color: #fff !important;
 }
 
@@ -137,6 +137,14 @@
 	color: #fff !important;
 }
 
+.reports{
+	color:	#009344 !important;
+}
+
+.reports:hover{
+	background-color: #009344;
+	color: #fff !important;
+}
 
 .xinzeng {
 	color: #5cb85c !important;
