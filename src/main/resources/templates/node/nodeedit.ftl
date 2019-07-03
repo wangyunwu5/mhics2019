@@ -120,10 +120,21 @@ a:hover {
 	display:flex;
 	flex-direction:row;
 }
+.pipe-table>tbody>tr input:hover{
+	background-color:#cccccc;
+}
 .pipetype-table-x{
 	width:10%;
 	border-left:1px solid #CCCCCC;
 	border-right:1px solid #CCCCCC;
+}
+.node-del-btn{
+	color:red;
+	padding: 2px;
+}
+.node-del-btn:hover{
+	font-weight:bold;
+	font-size:14px;
 }
 </style>
 </head>
@@ -162,29 +173,31 @@ a:hover {
 							</#if>
 						</h3>
 					</div>
-					<#if node??>
-					<!--盒子身体1-->
-						<div class="box-body no-padding bodyone" style="display:${(bodyone)!''}">
-							<#include "nodedetail.ftl">
-						</div>
-					<!--盒子身体2-->
-						<div class="box-body no-padding bodytwo" style="display:${(bodytwo)!''}">
-							<#include "nodeupdate.ftl">
-						</div>
-					<#else>
-					<!--盒子身体3-->
-						<div class="box-body no-padding bodythree" style="display:${(bodythree)!''}">
-							<#include "nodeadd.ftl">
-						</div>
-					</#if>
-					<!--盒子尾-->
-						<div class="box-body no-padding" style="">
-							<#include "nodeimgupload.ftl">
-						</div>
-					<!-- 管道信息 -->
-						<div class="box-body no-padding" style="background-color:#fff;">
-							<#include "editpipe.ftl">
-						</div>
+					<div class="box-body no-padding">
+							<#if node??>
+								<!--盒子身体1详情-->
+								<div class="box-body bodyone" style="display:${(bodyone)!''}">
+									<#include "nodedetail.ftl">
+								</div>
+								<!--盒子身体2修改-->
+								<div class="box-body bodytwo" style="display:${(bodytwo)!''}">
+									<#include "nodeupdate.ftl">
+								</div>
+							<#else>
+								<!--盒子身体3新增-->
+								<div class="box-body bodythree" style="display:${(bodythree)!''}">
+									<#include "nodeadd.ftl">
+								</div>
+							</#if>
+							<!--图片上传-->
+							<div class="box-body no-padding" style="">
+								<#include "nodeimgupload.ftl">
+							</div>
+							<!-- 管道信息 -->
+							<div class="box-body">
+								<#include "editpipe.ftl">
+							</div>
+					</div>
 					<div class="box-footer">
 							<input class="btn btn-primary" id="save" type="submit" value="保存" />
 							<input class="btn btn-default" id="cancel" type="button" value="取消"

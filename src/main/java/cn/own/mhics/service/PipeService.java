@@ -29,4 +29,8 @@ public class PipeService {
 	public List<Pipe> findPipesByNode(Long nodeId) {
 		return pipeDao.findPipesByNode(nodeId);
 	}
+
+	public void deletePipeById(Long pipeId) {
+		pipeDao.delete(pipeDao.findOnePipe(pipeId));
+	}
 }

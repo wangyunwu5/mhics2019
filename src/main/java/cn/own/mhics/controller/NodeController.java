@@ -96,7 +96,7 @@ public class NodeController {
 			 @RequestParam(value="cophopath",required=false)String cophoPath,@RequestParam(value="cophodelpath",required=false)String cophodelPath,@RequestParam(value="laphopath",required=false)String laphoPath,
 			 @RequestParam(value="laphodelpath",required=false)String laphodelPath,@RequestParam(value="shphopath",required=false)String shphoPath,@RequestParam(value="shphodelpath",required=false)String shphodelPath,
 			 @RequestParam(value="chphopath",required=false)String chphoPath,@RequestParam(value="chphodelpath",required=false)String chphodelPath,@RequestParam(value="bephopath",required=false)String bephoPath,
-			 @RequestParam(value="bephodelpath",required=false)String bephodelPath,@RequestParam(value="otphopath",required=false)String otphoPath,@RequestParam(value="otphodelpath",required=false)String otphodelPath,Pipes pipes) throws IllegalStateException, IOException {
+			 @RequestParam(value="bephodelpath",required=false)String bephodelPath,@RequestParam(value="otphopath",required=false)String otphoPath,@RequestParam(value="otphodelpath",required=false)String otphodelPath,Pipes pipes,@RequestParam(value="delpipe",required=false)String delPipe) throws IllegalStateException, IOException {
 		 System.out.println("当前的登录的用户id为："+session.getAttribute("userId"));
 		 Long userId =(Long) session.getAttribute("userId");
 		 Person person = personService.getOneUser(userId);
@@ -428,7 +428,7 @@ public class NodeController {
 				 else;
 			 }
 			nodeService.save(nodeNew);
-			pipeEdit(pipes,nodeNew);
+			pipeEdit(pipes,nodeNew,delPipe);
 		 }
 		 //新增
 		 else {
@@ -476,7 +476,7 @@ public class NodeController {
 			 }
 			 nodeService.save(node);
 			 Node nodeNew = nodeService.findOneByNo(node.getNodeNo());
-			 pipeEdit(pipes,nodeNew);
+			 pipeEdit(pipes,nodeNew,delPipe);
 		 }
 	
 		 return "redirect:nodemanage";
@@ -516,12 +516,17 @@ public class NodeController {
 			return false;
 	}
 	
-	public void pipeEdit(Pipes pipes,Node node) {
+	public void pipeEdit(Pipes pipes,Node node,String delpipe) {
 		System.out.println("进入pipe编辑方法");
 		System.out.println("pipelist的数据为"+pipes.getPipe());
+		String[] delPipeId =null;
+		if(!delpipe.trim().equals("") && delpipe!="" && delpipe!=null) {
+			delPipeId = delpipe.split(",");
+		}
 		List<Pipe> pipeList = pipes.getPipe();
 		for (Pipe pipe : pipeList) {
-			if(pipe.getPipeId()!=null) {
+			String flagPipeId = String.valueOf(pipe.getPipeId());
+			if(pipe.getPipeId()!=null && delpipe.indexOf(flagPipeId)==-1) {
 				System.out.println("管道编号为"+pipe.getPipeId());
 				Pipe pipeOld = pipeService.findOnePipe(pipe.getPipeId());
 				pipeOld.setPipeNo(pipe.getPipeNo());
@@ -546,7 +551,12 @@ public class NodeController {
 				pipeService.savePipe(pipe);
 			}
 		}
-		
+		if(delPipeId!=null) {
+			for(int i=0;i<delPipeId.length;i++) {
+				System.out.println("删除的pipeID为"+delPipeId[i]);
+				pipeService.deletePipeById(Long.valueOf(delPipeId[i]));
+			}
+		}
 		
 	}
 	//从数据库图片路径中删除掉已选择的路径
@@ -564,6 +574,5 @@ public class NodeController {
 		System.out.println("删除后剩余的图片地址为："+path);
 		return path;
 	}
-	
 	
 }

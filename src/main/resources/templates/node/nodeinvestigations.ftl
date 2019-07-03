@@ -59,7 +59,7 @@ a:hover {
 									<span class="glyphicon glyphicon-edit"></span>查看详情</a>
 									<a href="nodedelete?dcnodeid=${node.dcNodeId}" class="label shanchu"><span
 										class="glyphicon glyphicon-remove"></span> 删除</a>
-									<a href="/investigation/makediaocha?dcnodeid=${node.dcNodeId}" class="label reports"><span
+									<a href="/investigation?makediaocha?dcnodeid=${node.dcNodeId}" class="label reports"><span
 										class="glyphicon glyphicon-paperclip"></span> 生成报告</a>
 								</td>
 							</tr>

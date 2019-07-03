@@ -112,16 +112,42 @@ $('.addpipe').on('click',function(){
 			'<td><input name="pipe['+a+'].lining" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].pipeDepth" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].invert" class="" value="0"/></td>'+
-			'<td><input name="pipe['+a+'].photo" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="pipe['+a+'].pipePhoto" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="pipe['+a+'].wallNo" class="" value="--"/></td>'+
-			'<td><input name="pipe['+a+'].location" class="" value="--"/><input name="pipe['+a+'].pipeId" type="hidden" class="" value=""/></td>'+
+			'<td><input name="pipe['+a+'].pipeLocation" class="" value="--"/></td>'+
+			'<td><label onclick="delpipebyone(0,this)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>'+
 			'</tr>';
 	$('#pipe-table').find('tbody').append(tr);
 });
 //删除管道事件
 $('.deletepipe').on('click',function(){
+	var val=$('#pipe-table').find('tbody tr:last').find('td:last').text();
+	console.log("内容"+val)
 	$('#pipe-table').find('tbody tr:last').remove();
 });
+
+function delpipebyone(data,e){
+	console.log("点击了删除键，class="+$(e).parent('td').parent('tr').find('td').eq(0).text())
+	var tr = $(e).parent('td').parent('tr');
+	var pipeID=$('#delpipe').attr('value');
+	if(data=='0'){;
+	}
+	else{
+		if(pipeID!='' && pipeID!=null){
+			if(pipeID.indexOf(data)==-1){
+				$('#delpipe').val(pipeID+','+data);
+			}
+			else ;
+		}
+		else{
+			$('#delpipe').val(data);
+			$('#pipe-table').find('tbody').find(tr).css("opacity","0.4");
+			//$(e).parent('td').parent('tr').css("opacity","0.4").remove();
+		}
+		
+	}
+}
+
 function alertCheck(errorMess){
 	$('.alert-danger').css('display', 'block');
 	$('.error-mess').text(errorMess);
