@@ -57,11 +57,11 @@ a:hover {
 								<td><span>${node.status}</span></td>
 								<td><span>${node.yearLaid}</span></td>
 								<td>
-									<a href="nodeedit?nodeid=${node.nodeId}" class="label xiugai">
+									<a href="nodeedit?nodeid=${node.nodeId}"  class="label xiugai">
 									<span class="glyphicon glyphicon-edit"></span>查看详情</a>
-									<a href="nodevestigation?nodeNo=${node.nodeNo}" class="label liebiao">
+									<a href="/diaochanode/getinvestigation?nodeNo=${node.nodeNo}" class="label liebiao">
 									<span class="glyphicon glyphicon-list"></span>调查列表</a>
-									<a href="nodevestigation?nodeNo=${node.nodeId}" class="label shanchu">
+									<a href="nodedelete?nodeNo=${node.nodeId}"  onclick=" return confirm('你确定删除么？');" class="label shanchu">
 									<span class="glyphicon glyphicon-remove"></span>删除</a>
 								</td>
 							</tr>

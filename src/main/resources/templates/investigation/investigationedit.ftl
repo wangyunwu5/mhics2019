@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/common/box.css" />
+<link rel="stylesheet" type="text/css" href="/css/uploadimg.css" />
 <style type="text/css">
 a {
 	color: black;
@@ -25,303 +26,195 @@ a:hover {
 	height:50px;
 	font-size:20px;
 }
+.biankuang{
+	border:1px solid #CCCCCC;
+	padding: 0;
+    overflow: hidden;
+    padding:10px;
+}
+.photo-p{
+	display:inline-block;
+}
+#map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(9, 9, 9, 0.63);
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+.model-content {
+    width: 90%;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 6px;
+    margin: 20px auto;
+    line-height: 30px;
+    z-index: 10001;
+}
+.map-top{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.map-top input:hover{
+	border:2px solid #39B549;
+}
+.map-button:hover{
+	background-color:#009344;
+}
+.map-button{
+	display:block;
+	margin-left:10px;
+	background-color:#39B549;
+	font-size:12px;
+	width:40px;
+	height:30px;
+	line-height:30px;
+	border-radius: 3px;
+	color:white;
+}
+.togetmap{
+	font-size:12px;
+	margin-left:10px;
+	color:#CCCCCC;
+}
+.togetmap:hover{
+	color:black;
+}
+ .bodyone p{
+	color:	#888888;
+}
+.img_list_ul, .img_list_ul li{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.img_list_ul li{
+	margin-right:20px;
+	float:left;
+}
+.form-group{
+	margin-bottom:2px;
+}
+.pipe-table>thead>tr>td, .pipe-table>tbody>tr>td{
+	border:1px solid #CCCCCC;
+	text-align:center;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight:600;
+}
+.pipetype-table-td{
+	border-left:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+}
+.pipe-table>tbody>tr>td input{
+	width:100%;
+	border:none;
+}
+.pipetype-table{
+	display:flex;
+	flex-direction:row;
+}
+.pipe-table>tbody>tr input:hover{
+	background-color:#cccccc;
+}
+.pipetype-table-x{
+	width:10%;
+	border-left:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+}
+.node-del-btn{
+	color:red;
+	padding: 2px;
+}
+.node-del-btn:hover{
+	font-weight:bold;
+	font-size:14px;
+}
 </style>
 </head>
-
 <body style="background-color: #ecf0f5;">
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-md-2">
-			<h1 style="font-size: 24px; margin: 0;" class="">调查管理</h1>
+		 	<#if dcnode??>
+				<h1 style="font-size: 24px; margin: 0;" class="">详情</h1>
+			<#else>
+				<h1 style="font-size: 24px; margin: 0;" class="">新增</h1>
+			</#if>
 		</div>
 		<div class="col-md-10 text-right">
 			<a href="##"><span class="glyphicon glyphicon-home"></span> 首页</a> >
-			<a disabled="disabled">调查管理</a>
+				<#if dcnode??>
+					<a disabled="disabled">详情</a>
+				<#else>
+					<a disabled="disabled">新增</a>
+				</#if>
 		</div>
 	</div>
 	<div class="row" style="padding-top: 15px;">
 		<div class="col-md-12">
 			<!--id="container"-->
 			<div class="bgc-w box">
-				<form action="investigationedit" method="post" onsubmit=";">
-					<#if task??>
-						<input type="hidden" name="xg" value="xg"/>	
-					<#else>
-						<input type="hidden" name="xg" value="add"/>				
-					</#if>
+				<form action="dcnodesave" method="post" onsubmit="return check();" enctype="multipart/form-data">
 					<!--盒子头-->
 					<div class="box-header">
 						<h3 class="box-title">
 							<a href="javascript:history.back();" class="label label-default" style="padding: 5px;">
 								<i class="glyphicon glyphicon-chevron-left"></i> <span>返回</span>
 							</a>
+							<#if dcnode??>
+							<a href="#" id="to_xiugai" class="label xiugai" style="margin-left:20px;">
+									<span id="xiugai_span" class="glyphicon glyphicon-edit"></span><span id="xiugai_title">修改</span></a>
+							</#if>
 						</h3>
 					</div>
-					<!--盒子身体-->
 					<div class="box-body no-padding">
-						<div class="box-body">
-							<div class="alert alert-danger alert-dismissable" role="alert"
-								style="display: none;">
-								错误信息:<button class="close thisclose" type="button">&times;</button>
-								<span class="error-mess"></span>
+							<#if dcnode??>
+								<!--盒子身体1详情-->
+								<div class="box-body bodyone" style="display:${(bodyone)!''}">
+									<#include "diaochanodedetail.ftl">
+								</div>
+								<!--盒子身体2修改-->
+								<div class="box-body bodytwo" style="display:${(bodytwo)!''}">
+									<#include "diaochanodeupdate.ftl">
+								</div>
+							<#else>
+								<!--盒子身体3新增-->
+								<div class="box-body bodythree" style="display:${(bodythree)!''}">
+									<#include "diaochanodeadd.ftl">
+								</div>
+							</#if>
+							<!--图片上传-->
+							<div class="box-body no-padding" style="">
+								<#include "diaochanodeimgupload.ftl">
 							</div>
-							<div class="row">
-								<!------基本信息-------->
-								<div class="col-md-12 form-group tittle-label">
-									<label class="control-label"><span>基本信息</span></label> 
-								</div> 
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>项目编号</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>工作编号</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>IDMS Manhole ID</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>DSD ref</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-3 form-group">
-									<span> <label class="control-label">调查时间</label>
-									</span> <input name="endsTime" class="form-control" id="start" onclick="WdatePicker()"
-										value="${(project.endTime)!''}"/>
-								</div>
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>Drainage area code</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div>
-								<div class="col-md-3 form-group">
-									<label class="control-label"><span>调查人</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div>
-								<div class="col-md-12 form-group">
-									<label class="control-label"><span>Location</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div>
-								 <!---------- 沙井信息--- -->
-								 <div class="col-md-12 form-group tittle-label">
-									<label class="control-label"><span>沙井信息</span></label> 
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Node ref</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Grid ref</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<span> <label class="control-label">Year Laid(YYYY)</label>
-									</span> <input name="endaaTime" class="form-control" id="start" onclick="WdatePicker()"
-										value="${(project.endTime)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>status*</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Function*</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Node type*</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER Shape</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER Hinged</span></label> 
-									<input name="content" class="form-control" value="${ (task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER Lock</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER Duty</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER size (long or radius)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>COVER size (wide)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>SHAFT Side entry</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>SHAFT Regular course</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>SHAFT Depth</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>SHAFT Size  (long or radius)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>SHAFT Size (wide)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Soffit</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Steps</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Ladders</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER LNDGS</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Size (long or radius)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Size (wide)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Toxic atmosphere</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Evidence of vermin</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Construc code *</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Depth of flow</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Depth of silt</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>Height surch</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
-								<div class="col-md-2 form-group">
-									<label class="control-label"><span>CHAMBER Size (wide)</span></label> 
-									<input name="content" class="form-control" value="${(task.content)!''}"/>
-								</div> 
+							<!-- 管道信息 -->
+							<div class="box-body">
+								<#include "editdiaochapipe.ftl">
 							</div>
-						</div>
 					</div>
-					<!--盒子尾-->
 					<div class="box-footer">
 							<input class="btn btn-primary" id="save" type="submit" value="保存" />
 							<input class="btn btn-default" id="cancel" type="button" value="取消"
-							onclick="window.history.back();return false;" />
+							onclick="window.history.back();" />
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=x9SLjNT2Qnfj45CDm5Rrz2Eln6vL3O6i"></script>
 <script type="text/javascript" src="/plugins/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/easyui/jquery.js"></script>
+<script type="text/javascript" src="/js/investigation/dc_uploadImg.js"></script>
+<script type="text/javascript" src="/js/investigation/investigation.js"></script>
 <#include "/commons/modalTip.ftl"/> 
-<#if isread??>
-	<script type="text/javascript">
-		$('.form-control').attr("readOnly","true");
-	</script>
-</#if>
 <script type="text/javascript">
-function alertCheck(errorMess){
-	
-	$('.alert-danger').css('display', 'block');
-	// 提示框的错误信息显示
-	$('.error-mess').text(errorMess);
-}
-//表单提交前执行的onsubmit()方法；返回false时，执行相应的提示信息；返回true就提交表单到后台校验与执行
-function check() {
-	console.log("开始进入了");
-	//提示框可能在提交之前是block状态，所以在这之前要设置成none
-	$('.alert-danger').css('display', 'none');
-	var isRight = 1;
-	$('.form-control').each(function(index) {
-		// 如果在这些input框中，判断是否能够为空
-		if ($(this).val() == "") {
-			// 排除哪些字段是可以为空的，在这里排除
-			if (index == 2 || index == 3 || index == 4 || index == 5 || index == 6) {
-				return true;
-			}
-			// 获取到input框的兄弟的文本信息，并对应提醒；
-			var brother = $(this).siblings('.control-label').text();
-			var errorMess = "[" + brother + "输入框信息不能为空]";
-			// 对齐设置错误信息提醒；红色边框
-			$(this).parent().addClass("has-error has-feedback");
-			$('.alert-danger').css('display', 'block');
-			// 提示框的错误信息显示
-			$('.error-mess').text(errorMess);
-			// 模态框的错误信息显示
-			$('.modal-error-mess').text(errorMess);
-			isRight = 0;
-			return false;
-		} else {
-			if(index == 0){
-				var $name=$(this).val();
- 				if(isChinaName($name) == false){
- 					$(this).parent().addClass("has-error has-feedback");
- 					alertCheck("请输入中文名称");
- 					isRight = 0;
- 		 			return false;
- 				}
-			} 
-			
-			if(index == 3){
-				var $mail=$(this).val();
- 				if(isMailNo($mail) == false){
- 					$(this).parent().addClass("has-error has-feedback");
- 					alertCheck("邮箱格式错误");
- 					isRight = 0;
- 		 			return false;
- 				} 
-			}
-			// 在这个里面进行其他的判断；不为空的错误信息提醒
-			return true;
-		}
-	});
-	if (isRight == 0) {
-		//modalShow(0);
-		 return false;
-	} else if (isRight == 1) {
-		//modalShow(1);
-		 return true;
-	}
-//	return false;
-}
-
-
-//验证中文名称
-function isChinaName(name) {
- var pattern = /^[\u4E00-\u9FA5]{1,6}$/;
- return pattern.test(name);
-}
 
 </script>
 </html>

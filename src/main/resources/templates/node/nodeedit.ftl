@@ -211,7 +211,7 @@ a:hover {
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=x9SLjNT2Qnfj45CDm5Rrz2Eln6vL3O6i"></script>
 <script type="text/javascript" src="/plugins/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="/easyui/jquery.js"></script>
-<script type="text/javascript" src="/easyui/uploadImg.js"></script>
+<script type="text/javascript" src="/js/node/uploadImg.js"></script>
 <script type="text/javascript" src="/js/node/node.js"></script>
 <#include "/commons/modalTip.ftl"/> 
 <script type="text/javascript">

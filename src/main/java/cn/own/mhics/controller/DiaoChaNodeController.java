@@ -2,7 +2,6 @@ package cn.own.mhics.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,10 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.own.mhics.entity.DiaoChaNode;
+import cn.own.mhics.entity.DiaoChaPipe;
 import cn.own.mhics.entity.Node;
 import cn.own.mhics.entity.Person;
 import cn.own.mhics.entity.Pipe;
@@ -27,47 +26,37 @@ import cn.own.mhics.entity.Project;
 import cn.own.mhics.entity.Standard;
 import cn.own.mhics.service.DiaoChaNodeService;
 import cn.own.mhics.service.ImgUploadService;
-import cn.own.mhics.service.NodeService;
 import cn.own.mhics.service.PersonService;
 import cn.own.mhics.service.PipeService;
 import cn.own.mhics.service.ProjectService;
 import cn.own.mhics.service.StandardService;
 
 @Controller
-@RequestMapping(value = "/node")
-public class NodeController {
-
+@RequestMapping(value="/diaochanode")
+public class DiaoChaNodeController {
 	@Autowired
-	private NodeService nodeService;
+	private DiaoChaNodeService diaoChaNodeService;
 	@Autowired
 	private StandardService standardService;
+	@Autowired
+	private PipeService pipeService;
 	@Autowired
 	private ProjectService projectService;
 	@Autowired
 	private ImgUploadService imgus;
 	@Autowired
 	private PersonService personService;
-	@Autowired
-	private DiaoChaNodeService diaoChaNodeService;
-	@Autowired
-	private PipeService pipeService;
-
-	@RequestMapping(value = "/nodemanage")
-	public String getAllNodes(Model model) {
-		List<Node> nodeList = nodeService.getAllNode();
-		model.addAttribute("nodes", nodeList);
-		return "node/nodemanage";
-	}
-
-	@RequestMapping(value = "/nodeedit", method = RequestMethod.GET)
-	public String nodeEdit(@RequestParam(value = "nodeid", required = false) Long nodeId, Model model) {
-		if (nodeId != null) {
-			Node node = nodeService.getOneNode(nodeId);
-			List<Pipe> pipes = pipeService.findPipesByNode(nodeId);
-			if (pipes.size() > 0) {
-				model.addAttribute("pipes", pipes);
+	
+	@RequestMapping(value="/dcnodeedit", method = RequestMethod.GET)
+	public String getDiaoChaNode(@RequestParam(value = "dcnodeid", required = false) Long dcnodeId,Model model) {
+		if (dcnodeId != null) {
+			DiaoChaNode dcnode = diaoChaNodeService.getOneDiaoChaNode(dcnodeId);
+			List<DiaoChaPipe> dcpipes = pipeService.findDiaoChaPipesByNode(dcnodeId);
+			if (dcpipes.size() > 0) {
+				model.addAttribute("dcpipes", dcpipes);
+				System.out.println("nodeId为" + dcnodeId + "pipes有数据    " + dcpipes);
 			}
-			model.addAttribute("node", node);
+			model.addAttribute("dcnode", dcnode);
 			model.addAttribute("bodyone", "block");
 			model.addAttribute("bodytwo", "none");
 			model.addAttribute("bodythree", "none");
@@ -80,11 +69,11 @@ public class NodeController {
 		List<Project> projects = projectService.getAllProjects();
 		model.addAttribute("standards", standards);
 		model.addAttribute("projects", projects);
-		return "node/nodeedit";
+		return "investigation/investigationedit";
 	}
 
-	@RequestMapping(value = "/nodesave", method = RequestMethod.POST)
-	public String nodeSave(HttpSession session, Node node, @RequestParam(value = "zuobiao") String zuoBiao,
+	@RequestMapping(value="/dcnodesave",method = RequestMethod.POST)
+	public String diaoChaNodeSave(HttpSession session, DiaoChaNode dcnode, @RequestParam(value = "zuobiao") String zuoBiao,
 			@RequestParam(value = "projectId") Long projectId, Model model, HttpServletRequest request,
 			@RequestParam(value = "locationphoto") MultipartFile[] locationPhoto,
 			@RequestParam(value = "internalphoto") MultipartFile[] internalPhoto,
@@ -116,22 +105,21 @@ public class NodeController {
 			@RequestParam(value = "bephodelpath", required = false) String bephodelPath,
 			@RequestParam(value = "otphopath", required = false) String otphoPath,
 			@RequestParam(value = "otphodelpath", required = false) String otphodelPath, Pipes pipes,
-			@RequestParam(value = "delpipe", required = false) String delPipe)
-			throws IllegalStateException, IOException {
+			@RequestParam(value = "delpipe", required = false) String delPipe) throws IllegalStateException, IOException {
 		System.out.println("当前的登录的用户id为：" + session.getAttribute("userId"));
 		Long userId = (Long) session.getAttribute("userId");
 		Person person = personService.getOneUser(userId);
 		Project pro = projectService.findOne(projectId);
 		// 修改
-		if (node.getNodeId() != null) {
-			System.out.println("修改none" + node.getNodeId());
-			Node nodeNew = nodeService.getOneNode(node.getNodeId());
-			nodeNew.setNodeNo(node.getNodeNo());
+		if (dcnode.getDcNodeId() != null) {
+			System.out.println("修改none" + dcnode.getDcNodeId());
+			DiaoChaNode nodeNew = diaoChaNodeService.getOneDiaoChaNode(dcnode.getDcNodeId());
+			nodeNew.setNodeNo(dcnode.getNodeNo());
 			nodeNew.setProject(pro);
-			nodeNew.setWorkNo(node.getWorkNo());
-			nodeNew.setIdmsManholeId(node.getIdmsManholeId());
-			nodeNew.setDsdRef(node.getDsdRef());
-			nodeNew.setDrainageAreaCode(node.getDrainageAreaCode());
+			nodeNew.setWorkNo(dcnode.getWorkNo());
+			nodeNew.setIdmsManholeId(dcnode.getIdmsManholeId());
+			nodeNew.setDsdRef(dcnode.getDsdRef());
+			nodeNew.setDrainageAreaCode(dcnode.getDrainageAreaCode());
 			if (!("".equals(zuoBiao))) {
 				System.out.println("坐标值" + zuoBiao);
 				String[] zb = zuoBiao.split(",");
@@ -140,59 +128,60 @@ public class NodeController {
 					nodeNew.setZby(zb[i]);
 				}
 			}
-			nodeNew.setYearLaid(node.getYearLaid());
-			nodeNew.setStatus(node.getStatus());
-			nodeNew.setFunction(node.getFunction());
-			nodeNew.setNodeType(node.getNodeType());
-			nodeNew.setCoverType(node.getCoverType());
-			nodeNew.setCoverShape(node.getCoverShape());
-			nodeNew.setHinged(node.getHinged());
-			nodeNew.setLocked(node.getLocked());
-			nodeNew.setCoverDuty(node.getCoverDuty());
-			nodeNew.setCoverSizec(node.getCoverSizec());
-			nodeNew.setCoverSizek(node.getCoverSizek());
-			nodeNew.setCoverLevel(node.getCoverLevel());
-			nodeNew.setShaftSideEntry(node.getShaftSideEntry());
-			nodeNew.setShaftRegularCourse(node.getShaftRegularCourse());
-			nodeNew.setShaftDepth(node.getShaftDepth());
-			nodeNew.setShaftSizec(node.getShaftSizec());
-			nodeNew.setShaftSizek(node.getShaftSizek());
-			nodeNew.setChamberSoffit(node.getChamberSoffit());
-			nodeNew.setChamberSteps(node.getChamberSteps());
-			nodeNew.setChamberLadders(node.getChamberLadders());
-			nodeNew.setChamberLndgs(node.getChamberLndgs());
-			nodeNew.setChamberSizec(node.getChamberSizec());
-			nodeNew.setChamberSizek(node.getChamberSizek());
-			nodeNew.setToxic(node.getToxic());
-			nodeNew.setVermin(node.getVermin());
-			nodeNew.setConstructCode(node.getConstructCode());
-			nodeNew.setLocation(node.getLocation());
-			nodeNew.setLocationPhoto(node.getLocationPhoto());
-			nodeNew.setInternalPhoto(node.getInternalPhoto());
-			nodeNew.setLocationSketch(node.getLocationSketch());
-			nodeNew.setPlanOfMh(node.getPlanOfMh());
-			nodeNew.setDepthOfFlow(node.getDepthOfFlow());
-			nodeNew.setDepthOfSilt(node.getDepthOfSilt());
-			nodeNew.setHeightSurch(node.getHeightSurch());
-			nodeNew.setMhDepth(node.getMhDepth());
-			nodeNew.setUtr(node.getUtr());
-			nodeNew.setUtl(node.getUtl());
-			nodeNew.setUtga(node.getUtga());
-			nodeNew.setUts(node.getUts());
-			nodeNew.setJetting(node.getJetting());
-			nodeNew.setOnSlope(node.getOnSlope());
-			nodeNew.setSlopeNo(node.getSlopeNo());
-			nodeNew.setCoverCondition(node.getCoverCondition());
-			nodeNew.setLadderCondition(node.getLadderCondition());
-			nodeNew.setShaftCondition(node.getShaftCondition());
-			nodeNew.setChamberCondition(node.getChamberCondition());
-			nodeNew.setBenchingCondition(node.getBenchingCondition());
-			nodeNew.setOthersCondition(node.getOthersCondition());
-			nodeNew.setCctvCond(node.getCctvCond());
-			nodeNew.setCrity(node.getCrity());
-			nodeNew.setRecordPlanDifference(node.getRecordPlanDifference());
-			nodeNew.setRemark(node.getRemark());
-			nodeNew.setInsertDate(node.getInsertDate());
+			nodeNew.setYearLaid(dcnode.getYearLaid());
+			nodeNew.setSurveyDate(dcnode.getSurveyDate());
+			nodeNew.setStatus(dcnode.getStatus());
+			nodeNew.setFunction(dcnode.getFunction());
+			nodeNew.setNodeType(dcnode.getNodeType());
+			nodeNew.setCoverType(dcnode.getCoverType());
+			nodeNew.setCoverShape(dcnode.getCoverShape());
+			nodeNew.setHinged(dcnode.getHinged());
+			nodeNew.setLocked(dcnode.getLocked());
+			nodeNew.setCoverDuty(dcnode.getCoverDuty());
+			nodeNew.setCoverSizec(dcnode.getCoverSizec());
+			nodeNew.setCoverSizek(dcnode.getCoverSizek());
+			nodeNew.setCoverLevel(dcnode.getCoverLevel());
+			nodeNew.setShaftSideEntry(dcnode.getShaftSideEntry());
+			nodeNew.setShaftRegularCourse(dcnode.getShaftRegularCourse());
+			nodeNew.setShaftDepth(dcnode.getShaftDepth());
+			nodeNew.setShaftSizec(dcnode.getShaftSizec());
+			nodeNew.setShaftSizek(dcnode.getShaftSizek());
+			nodeNew.setChamberSoffit(dcnode.getChamberSoffit());
+			nodeNew.setChamberSteps(dcnode.getChamberSteps());
+			nodeNew.setChamberLadders(dcnode.getChamberLadders());
+			nodeNew.setChamberLndgs(dcnode.getChamberLndgs());
+			nodeNew.setChamberSizec(dcnode.getChamberSizec());
+			nodeNew.setChamberSizek(dcnode.getChamberSizek());
+			nodeNew.setToxic(dcnode.getToxic());
+			nodeNew.setVermin(dcnode.getVermin());
+			nodeNew.setConstructCode(dcnode.getConstructCode());
+			nodeNew.setLocation(dcnode.getLocation());
+			nodeNew.setLocationPhoto(dcnode.getLocationPhoto());
+			nodeNew.setInternalPhoto(dcnode.getInternalPhoto());
+			nodeNew.setLocationSketch(dcnode.getLocationSketch());
+			nodeNew.setPlanOfMh(dcnode.getPlanOfMh());
+			nodeNew.setDepthOfFlow(dcnode.getDepthOfFlow());
+			nodeNew.setDepthOfSilt(dcnode.getDepthOfSilt());
+			nodeNew.setHeightSurch(dcnode.getHeightSurch());
+			nodeNew.setMhDepth(dcnode.getMhDepth());
+			nodeNew.setUtr(dcnode.getUtr());
+			nodeNew.setUtl(dcnode.getUtl());
+			nodeNew.setUtga(dcnode.getUtga());
+			nodeNew.setUts(dcnode.getUts());
+			nodeNew.setJetting(dcnode.getJetting());
+			nodeNew.setOnSlope(dcnode.getOnSlope());
+			nodeNew.setSlopeNo(dcnode.getSlopeNo());
+			nodeNew.setCoverCondition(dcnode.getCoverCondition());
+			nodeNew.setLadderCondition(dcnode.getLadderCondition());
+			nodeNew.setShaftCondition(dcnode.getShaftCondition());
+			nodeNew.setChamberCondition(dcnode.getChamberCondition());
+			nodeNew.setBenchingCondition(dcnode.getBenchingCondition());
+			nodeNew.setOthersCondition(dcnode.getOthersCondition());
+			nodeNew.setCctvCond(dcnode.getCctvCond());
+			nodeNew.setCrity(dcnode.getCrity());
+			nodeNew.setRecordPlanDifference(dcnode.getRecordPlanDifference());
+			nodeNew.setRemark(dcnode.getRemark());
+			nodeNew.setInsertDate(dcnode.getInsertDate());
 			nodeNew.setInsertMan(person);
 			String lophonewpath = imgus.uploadMore(locationPhoto, "locationPhoto");
 			if (lophoPath != null && !lophoPath.trim().equals("")) {
@@ -418,132 +407,122 @@ public class NodeController {
 				else
 					;
 			}
-			nodeService.save(nodeNew);
-			pipeEdit(pipes, nodeNew, delPipe);
+			diaoChaNodeService.save(nodeNew);
+			diaoChaPipeEdit(pipes, nodeNew, delPipe);
 		}
 		// 新增
 		else {
-			System.out.println("新增none" + node.getNodeId());
+			System.out.println("新增none" + dcnode.getDcNodeId());
 			if (!("".equals(zuoBiao))) {
 				String[] zb = zuoBiao.split(",");
 				for (int i = 0; i < zb.length; i++) {
-					node.setZbx(zb[i]);
-					node.setZby(zb[i]);
+					dcnode.setZbx(zb[i]);
+					dcnode.setZby(zb[i]);
 				}
 			}
-			node.setInsertMan(person);
-			node.setProject(pro);
-			node.setInsertDate(new Date());
+			dcnode.setInsertMan(person);
+			dcnode.setProject(pro);
+			dcnode.setInsertDate(new Date());
 			if (!locationPhoto.equals(null) && locationPhoto.length > 0) {
 				System.out.println("locationPhoto进来了");
-				node.setLocationPhoto(imgus.uploadMore(locationPhoto, "locationPhoto"));
+				dcnode.setLocationPhoto(imgus.uploadMore(locationPhoto, "locationPhoto"));
 			}
 			if (internalPhoto != null && internalPhoto.length > 0) {
-				node.setInternalPhoto(imgus.uploadMore(internalPhoto, "internalPhoto"));
+				dcnode.setInternalPhoto(imgus.uploadMore(internalPhoto, "internalPhoto"));
 			}
 			if (locationSketch.length > 0 && locationSketch != null) {
-				node.setLocationSketch(imgus.uploadMore(locationSketch, "locationSketch"));
+				dcnode.setLocationSketch(imgus.uploadMore(locationSketch, "locationSketch"));
 			}
 			if (planofMh.length > 0 && planofMh != null) {
-				node.setPlanOfMh(imgus.uploadMore(planofMh, "planOfMh"));
+				dcnode.setPlanOfMh(imgus.uploadMore(planofMh, "planOfMh"));
 			}
 			if (coverPhoto.length > 0 && coverPhoto != null) {
-				node.setCoverPhoto(imgus.uploadMore(coverPhoto, "coverPhoto"));
+				dcnode.setCoverPhoto(imgus.uploadMore(coverPhoto, "coverPhoto"));
 			}
 			if (ladderPhoto.length > 0 && ladderPhoto != null) {
-				node.setLadderPhoto(imgus.uploadMore(ladderPhoto, "ladderPhoto"));
+				dcnode.setLadderPhoto(imgus.uploadMore(ladderPhoto, "ladderPhoto"));
 			}
 			if (shaftPhoto.length > 0 && shaftPhoto != null) {
-				node.setShaftPhoto(imgus.uploadMore(shaftPhoto, "shaftPhoto"));
+				dcnode.setShaftPhoto(imgus.uploadMore(shaftPhoto, "shaftPhoto"));
 			}
 			if (chamberPhoto.length > 0 && chamberPhoto != null) {
-				node.setChamberPhoto(imgus.uploadMore(chamberPhoto, "chamberPhoto"));
+				dcnode.setChamberPhoto(imgus.uploadMore(chamberPhoto, "chamberPhoto"));
 			}
 			if (benchingPhoto.length > 0 && benchingPhoto != null) {
-				node.setBenchingPhoto(imgus.uploadMore(benchingPhoto, "benchingPhoto"));
+				dcnode.setBenchingPhoto(imgus.uploadMore(benchingPhoto, "benchingPhoto"));
 			}
 			if (otherPhoto.length > 0 && otherPhoto != null) {
-				node.setOthersPhoto(imgus.uploadMore(otherPhoto, "otherPhoto"));
+				dcnode.setOthersPhoto(imgus.uploadMore(otherPhoto, "otherPhoto"));
 			}
-			nodeService.save(node);
-			Node nodeNew = nodeService.findOneByNo(node.getNodeNo());
-			pipeEdit(pipes, nodeNew, delPipe);
+			diaoChaNodeService.save(dcnode);
+			DiaoChaNode nodeNew = diaoChaNodeService.getOneNodeDiaoChaByNo(dcnode.getNodeNo());
+			diaoChaPipeEdit(pipes, nodeNew, delPipe);
 		}
-
-		return "redirect:nodemanage";
+		return "redirect:getinvestigation";
 	}
+	
 
-	@RequestMapping(value = "/mynode")
-	public String getMyNode(Model model, HttpSession session) {
-		Long userId = (Long) session.getAttribute("userId");
-		List<Node> nodeList = nodeService.getMyNode(userId);
-		model.addAttribute("nodes", nodeList);
-		return "node/nodemanage";
-	}
-
-	@RequestMapping(value = "/nodedetail", method = RequestMethod.GET)
-	public String getNodeDetail(@RequestParam(value = "nodeid") Long nodeId, Model model) {
-		Node node = nodeService.getOneNode(nodeId);
-		if (node != null) {
-			model.addAttribute("node", node);
+	@RequestMapping(value = "/getinvestigation", method = RequestMethod.GET)
+	public String getNodeVestigation(@RequestParam(value = "nodeNo",required=false) String nodeNo, Model model) {
+		if(nodeNo!=null && nodeNo !="") {
+			List<DiaoChaNode> inves = diaoChaNodeService.getNodeDiaoChaByNo(nodeNo);
+			if(inves.size()>0)
+				model.addAttribute("inves", inves);
 		}
-		List<Standard> standards = standardService.findAllStandard();
-		model.addAttribute("standards", standards);
-		return "node/nodeedit";
+		else {
+			List<DiaoChaNode> inves = diaoChaNodeService.getNodeDiaoChaAll();
+			if(inves.size()>0)
+				model.addAttribute("inves", inves);
+		}
+		return "investigation/diaochanodes";
 	}
 
-	@RequestMapping(value = "/onlynodeno", method = RequestMethod.POST)
-	public @ResponseBody boolean onlyNodeNo(@RequestParam(value = "nodeno") String nodeNo) {
-		Node node = nodeService.findOneByNo(nodeNo);
-		if (node == null) {
-			return true;
-		} else
-			return false;
-	}
-
-	public void pipeEdit(Pipes pipes, Node node, String delpipe) {
+	
+	public void diaoChaPipeEdit(Pipes pipes, DiaoChaNode dcnode, String delpipe) {
+		System.out.println("删除pipeID为"+delpipe);
 		String[] delPipeId = null;
 		if (!delpipe.trim().equals("") && delpipe != "" && delpipe != null) {
 			delPipeId = delpipe.split(",");
 		}
-		List<Pipe> pipeList = pipes.getPipe();
-		for (Pipe pipe : pipeList) {
-			String flagPipeId = String.valueOf(pipe.getPipeId());
-			if(pipe.getPipeId() == null) {
-				  pipe.setNode(node);
-				  pipe.setInsertDate(new Date());
-				  pipeService.savePipe(pipe);
+		List<DiaoChaPipe> pipeList = pipes.getDcpipe();
+		for (DiaoChaPipe dcpipe : pipeList) {
+			System.out.println("管道数据为："+dcpipe);
+			String flagPipeId = String.valueOf(dcpipe.getDcpipeId());
+			if(dcpipe.getDcpipeId() == null) {
+				  dcpipe.setDiaoChaNode(dcnode);
+				  dcpipe.setInsertDate(new Date());
+				  pipeService.saveDcpipe(dcpipe);
 			}
 			else{
 				  if(delpipe.indexOf(flagPipeId)==-1) {
-					  Pipe pipeOld =pipeService.findOnePipe(pipe.getPipeId());
-					  pipeOld.setPipeNo(pipe.getPipeNo()); pipeOld.setPipeType(pipe.getPipeType());
-					  pipeOld.setPipeShape(pipe.getPipeShape()); pipeOld.setNode(node);
-					  pipeOld.setPipeSizec(pipe.getPipeSizec());
-					  pipeOld.setPipeSizek(pipe.getPipeSizek());
-					  pipeOld.setBackDrop(pipe.getBackDrop());
-					  pipeOld.setPipeMaterial(pipe.getPipeMaterial());
-					  pipeOld.setLining(pipe.getLining());
-					  pipeOld.setPipeDepth(pipe.getPipeDepth());
-					  pipeOld.setInvert(pipe.getInvert());
-					  pipeOld.setPipePhoto(pipe.getPipePhoto());
-					  pipeOld.setWallNo(pipe.getWallNo());
-					  pipeOld.setPipeLocation(pipe.getPipeLocation());
-					  pipeOld.setInsertDate(pipe.getInsertDate());
-					  pipeService.savePipe(pipeOld); 
+					  DiaoChaPipe pipeOld =pipeService.findOneDiaoChaPipe(dcpipe.getDcpipeId());
+					  pipeOld.setPipeNo(dcpipe.getPipeNo());
+					  pipeOld.setPipeType(dcpipe.getPipeType());
+					  pipeOld.setPipeShape(dcpipe.getPipeShape());
+					  pipeOld.setDiaoChaNode(dcnode);
+					  pipeOld.setPipeSizec(dcpipe.getPipeSizec());
+					  pipeOld.setPipeSizek(dcpipe.getPipeSizek());
+					  pipeOld.setBackDrop(dcpipe.getBackDrop());
+					  pipeOld.setPipeMaterial(dcpipe.getPipeMaterial());
+					  pipeOld.setLining(dcpipe.getLining());
+					  pipeOld.setPipeDepth(dcpipe.getPipeDepth());
+					  pipeOld.setInvert(dcpipe.getInvert());
+					  pipeOld.setPhoto(dcpipe.getPhoto());
+					  pipeOld.setWallNo(dcpipe.getWallNo());
+					  pipeOld.setLocation(dcpipe.getLocation());
+					  pipeOld.setInsertDate(dcpipe.getInsertDate());
+					  pipeService.saveDcpipe(pipeOld); 
 					}
 				  else  ;
 			}
-			  
 		}	 
 		if (delPipeId != null) {
 			for (int i = 0; i < delPipeId.length; i++) {
-				pipeService.deletePipeById(Long.valueOf(delPipeId[i]));
+				pipeService.deleteDiaoChaPipeById(Long.valueOf(delPipeId[i]));
 			}
 		}
-
 	}
-
+	
 	public String delPathFromMysql(String sqlPath, String delPath) {
 		String[] deletePath = delPath.split(",");
 		String[] sqlpath = sqlPath.split(",");
@@ -557,5 +536,4 @@ public class NodeController {
 		String path = String.join(",", list);
 		return path;
 	}
-
 }

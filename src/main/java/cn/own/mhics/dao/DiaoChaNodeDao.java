@@ -13,5 +13,15 @@ public interface DiaoChaNodeDao extends JpaRepository<DiaoChaNode, Long> {
 	@Query("select dc from DiaoChaNode as dc where dc.nodeNo=?1")
 	List<DiaoChaNode> getDiaoChaByNo(String nodeNo);
 	
+	@Query("select dc from DiaoChaNode as dc where dc.dcNodeId=?1")
+	DiaoChaNode getOneDiaoChaNode(Long dcnodeId);
+
+	
+	@Query("select dc from DiaoChaNode as dc where dc.nodeNo=?1")
+	DiaoChaNode getNodeDiaoChaByNo(String nodeNo);
+
+	@Query("select dc from DiaoChaNode as dc")
+	List<DiaoChaNode> getDiaoChaAll();
+	
 
 }

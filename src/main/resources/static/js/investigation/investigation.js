@@ -101,20 +101,20 @@ $('.addpipe').on('click',function(){
 	var i=Number(td.text())+1;
 	var a=Number(td.text());
 	console.log("文字内容为："+i);
-	let tr = '<tr><td>'+i+'</td><td><input name="pipe['+a+'].pipeNo" class="" value="" placeholder="待输入"/></td>' +
-			'<td><input name="pipe['+a+'].pipeType" list="pipetype" class="" value="" placeholder="待输入"/>'+
+	let tr = '<tr><td>'+i+'</td><td><input name="dcpipe['+a+'].pipeNo" class="" value="" placeholder="待输入"/></td>' +
+			'<td><input name="dcpipe['+a+'].pipeType" list="pipetype" class="" value="" placeholder="待输入"/>'+
 			'<datalist id="pipetype"> <option value="in"><option value="out"></datalist></td>'+
-			'<td><input name="pipe['+a+'].pipeShape" class="" value="" placeholder="待输入"/></td>'+
-			'<td><div class="pipetype-table" style="width:100%"><div style="width:45%"><input name="pipe['+a+'].pipeSizec" class="" value="" placeholder="长或半径"/></div>'+
-			'<div class="pipetype-table-x">X</div><div style="width:45%"><input name="pipe['+a+'].pipeSizek" class="" value="" placeholder="宽"/></div></div></td>'+
-			'<td><input name="pipe['+a+'].backDrop" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].pipeMaterial" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].lining" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].pipeDepth" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].invert" class="" value="0"/></td>'+
-			'<td><input name="pipe['+a+'].pipePhoto" class="" value="" placeholder="待输入"/></td>'+
-			'<td><input name="pipe['+a+'].wallNo" class="" value="--"/></td>'+
-			'<td><input name="pipe['+a+'].pipeLocation" class="" value="--"/></td>'+
+			'<td><input name="dcpipe['+a+'].pipeShape" class="" value="" placeholder="待输入"/></td>'+
+			'<td><div class="pipetype-table" style="width:100%"><div style="width:45%"><input name="dcpipe['+a+'].pipeSizec" class="" value="" placeholder="长或半径"/></div>'+
+			'<div class="pipetype-table-x">X</div><div style="width:45%"><input name="dcpipe['+a+'].pipeSizek" class="" value="" placeholder="宽"/></div></div></td>'+
+			'<td><input name="dcpipe['+a+'].backDrop" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="dcpipe['+a+'].pipeMaterial" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="dcpipe['+a+'].lining" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="dcpipe['+a+'].pipeDepth" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="dcpipe['+a+'].invert" class="" value="0"/></td>'+
+			'<td><input name="dcpipe['+a+'].photo" class="" value="" placeholder="待输入"/></td>'+
+			'<td><input name="dcpipe['+a+'].wallNo" class="" value="--"/></td>'+
+			'<td><input name="dcpipe['+a+'].location" class="" value="--"/></td>'+
 			'<td><label onclick="delpipebyone(0)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>'+
 			'</tr>';
 	$('#pipe-table').find('tbody').append(tr);
@@ -147,14 +147,13 @@ function delpipebyone(data){
 			activeObj.parentElement.parentElement.style.opacity="0.4";
 		}
 	}
-	
+	console.log("删除的pipeId为"+$('#delpipe').attr('value'))
 }
 
 function alertCheck(errorMess){
 	$('.alert-danger').css('display', 'block');
 	$('.error-mess').text(errorMess);
 }
-//表单提交前执行的onsubmit()方法；返回false时，执行相应的提示信息；返回true就提交表单到后台校验与执行
 function check() {
 	console.log("开始进入了");
 	$('.alert-danger').css('display', 'none');

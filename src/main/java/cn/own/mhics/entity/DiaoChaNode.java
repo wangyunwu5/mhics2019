@@ -34,7 +34,7 @@ public class DiaoChaNode {
 	private String nodeNo;
 	
 	@Column(name="survey_date")
-	private String surveyDate;
+	private Date surveyDate;
 	
 	@Column(name="year_laid")
 	private Date yearLaid;
@@ -102,22 +102,6 @@ public class DiaoChaNode {
 	@Column(name="chamber_sizec")
 	private Double chamberSizec;
 	
-	public Long getDcNodeId() {
-		return dcNodeId;
-	}
-
-	public void setDcNodeId(Long dcNodeId) {
-		this.dcNodeId = dcNodeId;
-	}
-
-	public String getSurveyDate() {
-		return surveyDate;
-	}
-
-	public void setSurveyDate(String surveyDate) {
-		this.surveyDate = surveyDate;
-	}
-
 	@Column(name="chamber_sizek")
 	private Double chamberSizek;
 	
@@ -280,6 +264,24 @@ public class DiaoChaNode {
 	public Date getYearLaid() {
 		return yearLaid;
 	}
+	
+	public Long getDcNodeId() {
+		return dcNodeId;
+	}
+
+	public void setDcNodeId(Long dcNodeId) {
+		this.dcNodeId = dcNodeId;
+	}
+
+
+	public Date getSurveyDate() {
+		return surveyDate;
+	}
+
+	public void setSurveyDate(Date surveyDate) {
+		this.surveyDate = surveyDate;
+	}
+
 
 	public void setYearLaid(Date yearLaid) {
 		this.yearLaid = yearLaid;
@@ -344,6 +346,7 @@ public class DiaoChaNode {
 	public Double getCoverSizek() {
 		return coverSizek;
 	}
+	
 
 	public void setCoverSizek(Double coverSizek) {
 		this.coverSizek = coverSizek;
@@ -790,6 +793,7 @@ public class DiaoChaNode {
 		this.insertMan = insertMan;
 	}
 
+
 	@Override
 	public String toString() {
 		return "DiaoChaNode [dcNodeId=" + dcNodeId + ", workNo=" + workNo + ", drainageAreaCode=" + drainageAreaCode
@@ -817,5 +821,6 @@ public class DiaoChaNode {
 				+ insertDate + ", insertMan=" + insertMan + "]";
 	}
 
+	
 	
 }

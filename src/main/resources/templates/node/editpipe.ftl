@@ -31,9 +31,10 @@
 						<td width="6%"></td>
 					</tr>
 				</thead>
-				<tbody class="pipe-table-body">
-					<#if pipes??> <#list pipes as pipe>
-					<tr>
+				<tbody class="pipe-table-body"  id="pipe-table-body">
+					<#if node?? && pipes??>
+					 <#list pipes as pipe>
+					 <tr>
 						<td>${pipe_index+1}</td>
 						<td><input name="pipe[${pipe_index}].pipeNo" class=""
 							value="${(pipe.pipeNo)!''}" placeholder="待输入" /></td>
@@ -76,48 +77,9 @@
 							value="${(pipe.pipeLocation)!''}" /> <input
 							name="pipe[${pipe_index}].pipeId" type="hidden" class="pipeid"
 							value="${(pipe.pipeId)!''}"></td>
-						<td><label onclick="delpipebyone(${(pipe.pipeId)!''},this)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>
+						<td><label onclick="delpipebyone(${(pipe.pipeId)!''})" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>
 					</tr>
-					</#list> <#else>
-					<tr>
-						<td>1  <input type="checkbox" id="scales" name="scales" style="border:1px solid #cccccc"></td>
-						<td><input name="pipe[0].pipeNo" class="" value=""
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].pipeType" id="myCar" list="pipetype"
-							value="" placeholder="待输入" /> <datalist id="pipetype">
-								<option value="in">
-								<option value="out">
-							</datalist></td>
-						<td><input name="pipe[0].pipeShape" class="" value=""
-							placeholder="待输入" /></td>
-						<td>
-							<div class="pipetype-table" style="width: 100%">
-								<div style="width: 45%">
-									<input name="pipe[0].pipeSizec" class="" value="0"
-										placeholder="长或半径" />
-								</div>
-								<div class="pipetype-table-x">X</div>
-								<div style="width: 45%">
-									<input name="pipe[0].pipeSizek" class="" value="0"
-										placeholder="宽" />
-								</div>
-							</div>
-						</td>
-						<td><input name="pipe[0].backDrop" class="" value="0"
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].pipeMaterial" class="" value=""
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].lining" class="" value=""
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].pipeDepth" class="" value="0"
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].invert" class="" value="0" /></td>
-						<td><input name="pipe[0].pipePhoto" class="" value=""
-							placeholder="待输入" /></td>
-						<td><input name="pipe[0].wallNo" class="" value="--" /></td>
-						<td><input name="pipe[0].pipeLocation" class="" value="--" /></td>
-						<td><label onclick="delpipebyone(0,this)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>
-					</tr>
+					</#list>
 					</#if>
 				</tbody>
 			</table>
