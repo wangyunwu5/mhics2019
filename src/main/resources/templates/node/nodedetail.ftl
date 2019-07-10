@@ -38,10 +38,10 @@
 		<p>,</p>
 		</#if>
 	</div>
-	<div class="col-md-2 form-group">
+	<div class="col-md-1 form-group">
 		<span> <label class="control-label">建造年份</label>
 		</span>
-		<p>${(node.yearLaid)!''}</p>
+		<p>${(node.yearLaid)?date}</p>
 	</div>
 	<div class="col-md-1 form-group">
 		<label class="control-label"><span>井状况</span></label>

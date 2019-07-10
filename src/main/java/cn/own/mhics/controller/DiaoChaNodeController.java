@@ -485,37 +485,39 @@ public class DiaoChaNodeController {
 			delPipeId = delpipe.split(",");
 		}
 		List<DiaoChaPipe> pipeList = pipes.getDcpipe();
-		for (DiaoChaPipe dcpipe : pipeList) {
-			System.out.println("管道数据为："+dcpipe);
-			String flagPipeId = String.valueOf(dcpipe.getDcpipeId());
-			if(dcpipe.getDcpipeId() == null) {
-				  dcpipe.setDiaoChaNode(dcnode);
-				  dcpipe.setInsertDate(new Date());
-				  pipeService.saveDcpipe(dcpipe);
-			}
-			else{
-				  if(delpipe.indexOf(flagPipeId)==-1) {
-					  DiaoChaPipe pipeOld =pipeService.findOneDiaoChaPipe(dcpipe.getDcpipeId());
-					  pipeOld.setPipeNo(dcpipe.getPipeNo());
-					  pipeOld.setPipeType(dcpipe.getPipeType());
-					  pipeOld.setPipeShape(dcpipe.getPipeShape());
-					  pipeOld.setDiaoChaNode(dcnode);
-					  pipeOld.setPipeSizec(dcpipe.getPipeSizec());
-					  pipeOld.setPipeSizek(dcpipe.getPipeSizek());
-					  pipeOld.setBackDrop(dcpipe.getBackDrop());
-					  pipeOld.setPipeMaterial(dcpipe.getPipeMaterial());
-					  pipeOld.setLining(dcpipe.getLining());
-					  pipeOld.setPipeDepth(dcpipe.getPipeDepth());
-					  pipeOld.setInvert(dcpipe.getInvert());
-					  pipeOld.setPhoto(dcpipe.getPhoto());
-					  pipeOld.setWallNo(dcpipe.getWallNo());
-					  pipeOld.setLocation(dcpipe.getLocation());
-					  pipeOld.setInsertDate(dcpipe.getInsertDate());
-					  pipeService.saveDcpipe(pipeOld); 
-					}
-				  else  ;
-			}
-		}	 
+		if(pipeList!=null) {
+			for (DiaoChaPipe dcpipe : pipeList) {
+				System.out.println("管道数据为："+dcpipe);
+				String flagPipeId = String.valueOf(dcpipe.getDcpipeId());
+				if(dcpipe.getDcpipeId() == null) {
+					  dcpipe.setDiaoChaNode(dcnode);
+					  dcpipe.setInsertDate(new Date());
+					  pipeService.saveDcpipe(dcpipe);
+				}
+				else{
+					  if(delpipe.indexOf(flagPipeId)==-1) {
+						  DiaoChaPipe pipeOld =pipeService.findOneDiaoChaPipe(dcpipe.getDcpipeId());
+						  pipeOld.setPipeNo(dcpipe.getPipeNo());
+						  pipeOld.setPipeType(dcpipe.getPipeType());
+						  pipeOld.setPipeShape(dcpipe.getPipeShape());
+						  pipeOld.setDiaoChaNode(dcnode);
+						  pipeOld.setPipeSizec(dcpipe.getPipeSizec());
+						  pipeOld.setPipeSizek(dcpipe.getPipeSizek());
+						  pipeOld.setBackDrop(dcpipe.getBackDrop());
+						  pipeOld.setPipeMaterial(dcpipe.getPipeMaterial());
+						  pipeOld.setLining(dcpipe.getLining());
+						  pipeOld.setPipeDepth(dcpipe.getPipeDepth());
+						  pipeOld.setInvert(dcpipe.getInvert());
+						  pipeOld.setPhoto(dcpipe.getPhoto());
+						  pipeOld.setWallNo(dcpipe.getWallNo());
+						  pipeOld.setLocation(dcpipe.getLocation());
+						  pipeOld.setInsertDate(dcpipe.getInsertDate());
+						  pipeService.saveDcpipe(pipeOld); 
+						}
+					  else  ;
+				}
+			}	 
+		}
 		if (delPipeId != null) {
 			for (int i = 0; i < delPipeId.length; i++) {
 				pipeService.deleteDiaoChaPipeById(Long.valueOf(delPipeId[i]));
@@ -535,5 +537,18 @@ public class DiaoChaNodeController {
 		}
 		String path = String.join(",", list);
 		return path;
+	}
+	
+	@RequestMapping(value="toreportpage",method = RequestMethod.GET)
+	public String toReportPage(@RequestParam(value="dcnodeid")Long dcnodeId,Model model) {
+		model.addAttribute("dcnodeid",dcnodeId);
+		return "investigation/reportpage";
+	}
+	
+	@RequestMapping(value="/getreport", method = RequestMethod.POST)
+	public String getReport(@RequestParam(value="dcnodeid")Long dcnodeId, @RequestParam(value="reportway")Integer reportWay,Model model) {
+		System.out.println("收到的数据为："+dcnodeId+"--"+reportWay);
+		
+		return "redirect:/pdf/preview";
 	}
 }

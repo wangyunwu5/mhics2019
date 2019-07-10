@@ -53,6 +53,7 @@
                     '</div>' +
                 '</div>';
       $(this.container).html(html);
+      console.log("this container is "+$(self.container).parent().attr("class"))
       $("#form_"+containerId).html(inputDOM);
       // 如果需要折叠按钮的话
       if (this.isfold) {
@@ -90,8 +91,13 @@
       if(this.imgpath!=''&&this.imgpath!='null'){
     	  console.log("imgpath:"+this.imgpath);
     	  var imgpathlist=this.imgpath.split(",");
+    	  var Class=$(self.container).parent().attr("class");
+    	  console.log("parent style is "+Class)
     	  self.showImage(imgpathlist);
     	  $(self.container).find('#have_img').removeClass('none');
+    	  if(Class.indexOf("group-none")>-1){
+    		  $(self.container).parent().removeClass('group-none');
+    	  }
       }
       
       $(this.container).on('click', '#xiugai', function() {
@@ -99,11 +105,9 @@
     	  console.log("img_delete的class为"+theclass);
     	  var sub = "none";
     	  if(theclass.indexOf(sub) == -1){
-    		  console.log("没有none");
     		  $('#have_'+self.containerId).find('.img_delete').addClass('none');
     	  }
     	  else{
-    		  console.log("有none");
     	  $('#have_'+self.containerId).find('.img_delete').removeClass('none');
     	  }
     	  });

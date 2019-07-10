@@ -124,7 +124,6 @@ public class NodeController {
 		Project pro = projectService.findOne(projectId);
 		// 修改
 		if (node.getNodeId() != null) {
-			System.out.println("修改none" + node.getNodeId());
 			Node nodeNew = nodeService.getOneNode(node.getNodeId());
 			nodeNew.setNodeNo(node.getNodeNo());
 			nodeNew.setProject(pro);
@@ -133,7 +132,6 @@ public class NodeController {
 			nodeNew.setDsdRef(node.getDsdRef());
 			nodeNew.setDrainageAreaCode(node.getDrainageAreaCode());
 			if (!("".equals(zuoBiao))) {
-				System.out.println("坐标值" + zuoBiao);
 				String[] zb = zuoBiao.split(",");
 				for (int i = 0; i < zb.length; i++) {
 					nodeNew.setZbx(zb[i]);
@@ -423,7 +421,6 @@ public class NodeController {
 		}
 		// 新增
 		else {
-			System.out.println("新增none" + node.getNodeId());
 			if (!("".equals(zuoBiao))) {
 				String[] zb = zuoBiao.split(",");
 				for (int i = 0; i < zb.length; i++) {

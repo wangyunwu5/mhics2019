@@ -136,6 +136,9 @@ a:hover {
 	font-weight:bold;
 	font-size:14px;
 }
+.group-none{
+	display: none;
+}
 </style>
 </head>
 <body style="background-color: #ecf0f5;">
@@ -201,7 +204,7 @@ a:hover {
 					<div class="box-footer">
 							<input class="btn btn-primary" id="save" type="submit" value="保存" />
 							<input class="btn btn-default" id="cancel" type="button" value="取消"
-							onclick="window.history.back();" />
+							onclick="javascript:history.back();" />
 					</div>
 				</form>
 			</div>

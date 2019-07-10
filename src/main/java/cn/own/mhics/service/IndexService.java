@@ -24,8 +24,11 @@ public class IndexService {
 		req.setAttribute("allpamenu",paMenuAll);
 		req.setAttribute("allsonmenu",sonMenuAll);
 	}
-	/*
-	 * public void printINlist(List<SystemMenu> paMenuAll ) { for(int i =
-	 * 0;i<paMenuAll.size();i++) { System.out.println(paMenuAll.get(i)+"--+--"); } }
-	 */
+	public List<SystemMenu> findPaMenu(Long data){
+		return indexDao.findParentMenu(data);
+	}
+	
+	public List<SystemMenu> findSonMenu(Long data){
+		return indexDao.findSonMenu(data);
+	}
 }

@@ -115,7 +115,7 @@ $('.addpipe').on('click',function(){
 			'<td><input name="dcpipe['+a+'].photo" class="" value="" placeholder="待输入"/></td>'+
 			'<td><input name="dcpipe['+a+'].wallNo" class="" value="--"/></td>'+
 			'<td><input name="dcpipe['+a+'].location" class="" value="--"/></td>'+
-			'<td><label onclick="delpipebyone(0)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>'+
+			'<td><label onclick="javascript:return delpipebyone(0)" class="label node-del-btn"><span class="glyphicon glyphicon-remove"></span> 删除</label></td>'+
 			'</tr>';
 	$('#pipe-table').find('tbody').append(tr);
 });
@@ -131,25 +131,30 @@ function delpipebyone(data){
 	var activeObj = event.srcElement;
 	var rowIndex = activeObj.parentElement.parentElement.rowIndex;
 	var pipeID=$('#delpipe').attr('value');
-	if(data=='0'){
-		tab.deleteRow(rowIndex);
-	}
-	else{
-		if(pipeID!='' && pipeID!=null){
-			if(pipeID.indexOf(data)==-1){
-				$('#delpipe').val(pipeID+','+data);
-				activeObj.parentElement.parentElement.style.opacity="0.4";
-			}
-			else ;
+	if(confirm('确定要删除吗')==true){
+		if(data=='0'){
+			tab.deleteRow(rowIndex);
 		}
 		else{
-			$('#delpipe').val(data);
-			activeObj.parentElement.parentElement.style.opacity="0.4";
+			if(pipeID!='' && pipeID!=null){
+				if(pipeID.indexOf(data)==-1){
+					$('#delpipe').val(pipeID+','+data);
+					activeObj.parentElement.parentElement.style.opacity="0.4";
+				}
+				else ;
+			}
+			else{
+				$('#delpipe').val(data);
+				activeObj.parentElement.parentElement.style.opacity="0.4";
+			}
 		}
+		return true;
+	}
+	else{
+		return false;
 	}
 	console.log("删除的pipeId为"+$('#delpipe').attr('value'))
 }
-
 function alertCheck(errorMess){
 	$('.alert-danger').css('display', 'block');
 	$('.error-mess').text(errorMess);
@@ -184,7 +189,6 @@ function check() {
  					return false;
 				} 
 			}
-			// 在这个里面进行其他的判断；不为空的错误信息提醒
 			return true;
 		}
 	});

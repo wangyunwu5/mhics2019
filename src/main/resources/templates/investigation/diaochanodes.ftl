@@ -16,7 +16,7 @@ a:hover {
 		<h1 style="font-size: 24px; margin: 0;" class="">井调查列表</h1>
 	</div>
 	<div class="col-md-10 text-right">
-		<a href="##"><span class="glyphicon glyphicon-home"></span> 首页</a> > 
+		<a href="##"><span class="glyphicon glyphicon-home"></span> 首页</a> >
 		<a disabled="disabled">井调查列表</a>
 	</div>
 </div>
@@ -30,10 +30,23 @@ a:hover {
 					<a href="javascript:history.back();" class="label label-default" style="padding: 5px;">
 								<i class="glyphicon glyphicon-chevron-left"></i> <span>返回</span>
 					</a>
-					<a href="nodeedit" class="label label-success" style="padding: 5px;margin-left:10px;">
+					<a href="dcnodeedit" class="label label-success" style="padding: 5px;margin-left:10px;">
 						<span class="glyphicon glyphicon-plus"></span> 新增调查
 					</a>
+					<a href="#" class="label label-success" style="padding: 5px;margin-left:10px;">
+						<span class="glyphicon glyphicon-plus"></span> 导入excel表
+					</a>
 				</h3>
+				<div class="box-tools">
+					<div class="input-group" style="width: 150px;">
+						<input type="text" class="form-control input-sm cha"
+							placeholder="查找..." />
+						<div class="input-group-btn chazhao">
+							<a class="btn btn-sm btn-default"><span
+								class="glyphicon glyphicon-search"></span></a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!--盒子身体-->
 			<div class="box-body no-padding">
@@ -60,7 +73,7 @@ a:hover {
 											<span class="glyphicon glyphicon-edit"></span>查看详情</a>
 											<a href="dcnodedelete?dcnodeid=${inve.dcNodeId}" onclick=" return confirm('你确定删除么？');" class="label shanchu"><span
 												class="glyphicon glyphicon-remove"></span> 删除</a>
-											<a href="/investigation?makediaocha?dcnodeid=${inve.dcNodeId}" class="label reports"><span
+											<a href="/diaochanode/toreportpage?dcnodeid=${inve.dcNodeId}" class="label reports"><span
 												class="glyphicon glyphicon-paperclip"></span> 生成报告</a>
 										</td>
 									</tr>

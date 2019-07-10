@@ -10,5 +10,8 @@ import cn.own.mhics.entity.Role;
 public interface RoleDao extends JpaRepository<Role, Integer> {
 	@Query("select ro from Role as ro")
 	List<Role> findAllRole();
+
+	@Query("select r from Role as r where r.roleId = ?1")
+	Role findOneRole(Integer roleId);
   
 }

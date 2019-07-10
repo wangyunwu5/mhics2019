@@ -21,4 +21,12 @@ public class RoleService {
 		return roleDao.findAllRole();
 	}
 
+	public Role findOneRole(Integer roleId) {
+		return roleDao.findOneRole(roleId);
+	}
+
+	public void save(Role role) {
+		roleDao.save(role);
+	}
+
 }

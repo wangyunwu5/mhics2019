@@ -25,10 +25,7 @@ public class ImgDisplayController {
 	@RequestMapping(value="/image/**")
 	public void image(HttpServletRequest request,Model model, HttpServletResponse response) throws Exception {
 		System.out.println("图片路径方法");
-		
-		String projectPath = ClassUtils.getDefaultClassLoader().getResource("").getPath();
 		String startpath = new String(URLDecoder.decode(request.getRequestURI(), "utf-8"));
-		System.out.println("bbbbbbbbbbbbbbbbbbbbbbb"+startpath);
 		String path = startpath.replace("/image", "");
 		File f = new File(imgPath, path);
 		ServletOutputStream sos = response.getOutputStream();

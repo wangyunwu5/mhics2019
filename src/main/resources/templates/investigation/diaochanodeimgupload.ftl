@@ -81,7 +81,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group " style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>cover photo</span></label>
 			<div class="form-group biankuang" id="coverCondition">
 				<div class="btn btn-default"
@@ -101,7 +101,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group " style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>ladder photo</span></label>
 			<div class="form-group biankuang" id="ladderCondition">
 				<div class="btn btn-default"
@@ -121,7 +121,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group " style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>shaft photo</span></label>
 			<div class="form-group biankuang" id="shaftCondition">
 				<div class="btn btn-default"
@@ -142,7 +142,7 @@
 			</div>
 			</div>
 		</div>
-		<div class="col-md-12 form-group " style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>chamber photo</span></label>
 			<div class="form-group biankuang" id="chamberCondition">
 				<div class="btn btn-default"
@@ -162,7 +162,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group " style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>benching photo</span></label>
 			<div class="form-group biankuang" id="benchingCondition">
 				<div class="btn btn-default"
@@ -182,7 +182,7 @@
 				</a> </#if>
 			</div>
 		</div>
-		<div class="col-md-12 form-group" style="display: none">
+		<div class="col-md-12 form-group group-none">
 			<label class="control-label"><span>others photo</span></label>
 			<div class="form-group biankuang" id="othersCondition">
 				<div class="btn btn-default"

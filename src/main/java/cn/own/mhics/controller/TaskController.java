@@ -56,10 +56,7 @@ public class TaskController {
 		Person person = personService.getOneUser(userId);
 		task.setPerson(person);
 		task.setProject(project);
-		System.out.println("创建时间为："+task.getCreateTime());
-		System.out.println("开始时间为："+task.getStartTime());
-		System.out.println("结束时间为："+task.getEndTime());
-		//taskService.save(task);
+		taskService.save(task);
 		return "redirect:taskmanage";
 	}
 
