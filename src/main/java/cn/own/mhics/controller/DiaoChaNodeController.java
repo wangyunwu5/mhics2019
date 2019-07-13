@@ -548,7 +548,7 @@ public class DiaoChaNodeController {
 	@RequestMapping(value="/getreport", method = RequestMethod.POST)
 	public String getReport(@RequestParam(value="dcnodeid")Long dcnodeId, @RequestParam(value="reportway")Integer reportWay,Model model) {
 		System.out.println("收到的数据为："+dcnodeId+"--"+reportWay);
-		
-		return "redirect:/pdf/preview";
+		 return "redirect:/pdf/preview?dcnodeid="+dcnodeId; 
+		/* return "investigation/pdfpage"; */
 	}
 }

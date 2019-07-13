@@ -24,7 +24,6 @@ public class PdfUtils {
     }
  
     private static final Logger LOGGER = LoggerFactory.getLogger(PdfUtils.class);
- 
     /**
      * 按模板和参数生成html字符串,再转换为flying-saucer识别的Document
      *
@@ -58,7 +57,6 @@ public class PdfUtils {
             return null;
         }
     }
- 
     /**
      * 核心: 根据freemarker模板生成pdf文档
      *
@@ -73,7 +71,7 @@ public class PdfUtils {
             LOGGER.warn("警告:freemarker模板参数为空!");
             return;
         }
- 
+        //ITextRenderer 实现将html转为pdf
         ITextRenderer renderer = new ITextRenderer();
         Document doc = generateDoc(configurer, templateName, listVars.get(0));
         renderer.setDocument(doc, null);
@@ -94,7 +92,6 @@ public class PdfUtils {
         }
         renderer.finishPDF(); //完成pdf写入
     }
- 
     /**
      * pdf下载
      *
@@ -121,7 +118,6 @@ public class PdfUtils {
             LOGGER.error(e.getMessage(), e);
         }
     }
- 
     /**
      * pdf预览
      *
