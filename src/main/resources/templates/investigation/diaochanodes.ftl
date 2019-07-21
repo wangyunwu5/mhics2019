@@ -53,12 +53,12 @@ a:hover {
 				<div class="table-responsive">
 					<table class="table table-hover table-striped">
 						<tr>
-							<th colspan="1">井编号</th>
-							<th colspan="1">井类型</th>
-							<th colspan="1">井用途</th>
-							<th colspan="1">目前状态</th>
-							<th colspan="1">调查时间</th>
-							<th colspan="1">操作</th>
+							<th width="15%">井编号</th>
+							<th width="15%">井类型</th>
+							<th width="15%">井用途</th>
+							<th width="15%">目前状态</th>
+							<th width="15%">调查时间</th>
+							<th width="25%">操作</th>
 						</tr>
 						<#if inves??>
 							<#list inves as inve>
@@ -73,8 +73,10 @@ a:hover {
 											<span class="glyphicon glyphicon-edit"></span>查看详情</a>
 											<a href="dcnodedelete?dcnodeid=${inve.dcNodeId}" onclick=" return confirm('你确定删除么？');" class="label shanchu"><span
 												class="glyphicon glyphicon-remove"></span> 删除</a>
-											<a href="/diaochanode/toreportpage?dcnodeid=${inve.dcNodeId}" class="label reports"><span
-												class="glyphicon glyphicon-paperclip"></span> 生成报告</a>
+											<a href="/diaochanode/topdfreport?dcnodeid=${inve.dcNodeId}" class="label reports"><span
+												class="glyphicon glyphicon-paperclip"></span>生成pdf报告</a>
+											<a href="/diaochanode/towordreport?dcnodeid=${inve.dcNodeId}" class="label reports"><span
+												class="glyphicon glyphicon-paperclip"></span>生成word报告</a>
 										</td>
 									</tr>
 							</#list>

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import cn.own.mhics.entity.DiaoChaNode;
 import cn.own.mhics.service.DiaoChaNodeService;
-import cn.own.mhics.utils.PdfUtils;
+import cn.own.mhics.utils.PdfUtils_unused;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +46,7 @@ public class PdfController {
         variables.put("dcnode",dcNode);
         listVars.add(variables);
  
-        PdfUtils.preview(configurer,"/investigation/pdfPage.ftl",listVars,response);
+        PdfUtils_unused.preview(configurer,"/investigation/pdfPage.ftl",listVars,response);
     }
     /**
      * pdf下载
@@ -60,6 +60,6 @@ public class PdfController {
         Map<String,Object> variables = new HashMap<>();
         variables.put("title","测试下载ASGX!");
         listVars.add(variables);
-        PdfUtils.download(configurer,"pdfPage.ftl",listVars,response,"测试中文.pdf");
+        PdfUtils_unused.download(configurer,"pdfPage.ftl",listVars,response,"测试中文.pdf");
     }
 }

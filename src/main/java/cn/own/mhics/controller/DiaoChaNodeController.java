@@ -30,6 +30,7 @@ import cn.own.mhics.service.PersonService;
 import cn.own.mhics.service.PipeService;
 import cn.own.mhics.service.ProjectService;
 import cn.own.mhics.service.StandardService;
+import cn.own.mhics.utils.PDFUtils;
 
 @Controller
 @RequestMapping(value="/diaochanode")
@@ -46,6 +47,8 @@ public class DiaoChaNodeController {
 	private ImgUploadService imgus;
 	@Autowired
 	private PersonService personService;
+	@Autowired 
+	private PDFUtils pdfUtils;
 	
 	@RequestMapping(value="/dcnodeedit", method = RequestMethod.GET)
 	public String getDiaoChaNode(@RequestParam(value = "dcnodeid", required = false) Long dcnodeId,Model model) {
@@ -539,10 +542,13 @@ public class DiaoChaNodeController {
 		return path;
 	}
 	
-	@RequestMapping(value="toreportpage",method = RequestMethod.GET)
+	@RequestMapping(value="/topdfreport",method = RequestMethod.GET)
 	public String toReportPage(@RequestParam(value="dcnodeid")Long dcnodeId,Model model) {
-		model.addAttribute("dcnodeid",dcnodeId);
-		return "investigation/reportpage";
+		DiaoChaNode dcNode = diaoChaNodeService.getOneDiaoChaNode(dcnodeId);
+		List<DiaoChaPipe> dcpipes = pipeService.findDiaoChaPipesByNode(dcnodeId);
+		//model.addAttribute("dcnodeid",dcnodeId);
+		pdfUtils.initPDF(dcNode,dcpipes,"d:/");
+		return "success";
 	}
 	
 	@RequestMapping(value="/getreport", method = RequestMethod.POST)
