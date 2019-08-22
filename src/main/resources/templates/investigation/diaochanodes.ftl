@@ -36,6 +36,9 @@ a:hover {
 					<a href="#" class="label label-success" style="padding: 5px;margin-left:10px;">
 						<span class="glyphicon glyphicon-plus"></span> 导入excel表
 					</a>
+					<a href="tomap" class="label label-success" style="padding: 5px;margin-left:10px;">
+						<span class="glyphicon glyphicon-plus"></span> 地图展示
+					</a>
 				</h3>
 				<div class="box-tools">
 					<div class="input-group" style="width: 150px;">

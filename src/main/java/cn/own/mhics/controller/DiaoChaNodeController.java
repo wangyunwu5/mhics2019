@@ -527,6 +527,11 @@ public class DiaoChaNodeController {
 			}
 		}
 	}
+	@RequestMapping(value="tomap", method = RequestMethod.GET)
+	public String tomap(Model model) {
+		
+		return "cesium/map";
+	}
 	
 	public String delPathFromMysql(String sqlPath, String delPath) {
 		String[] deletePath = delPath.split(",");
