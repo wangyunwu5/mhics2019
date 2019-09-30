@@ -48,4 +48,8 @@ public class TaskService {
  		List<Task> tasks=taskDao.getMyTasks(userId);
  		req.setAttribute("tasks",tasks);
 	}
+
+	public List<Task> getTaskToMobile(Long userId) {
+		return taskDao.getAllTask();
+	}
 }

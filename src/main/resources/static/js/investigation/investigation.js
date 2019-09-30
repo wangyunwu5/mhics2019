@@ -187,7 +187,7 @@ function check() {
  					alertCheck("该井编号已存在");
  					isRight=0;
  					return false;
-				} 
+				}
 			}
 			return true;
 		}

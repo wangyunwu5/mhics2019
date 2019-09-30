@@ -101,15 +101,8 @@
 										<td><span class="widths">${par.menuUrl}</span></td>
 										<td><span class="menus">菜单</span></td>
 										<td>
-										<#if par.check==true>
-											<span class="labels">
-												<label><input type="checkbox" name="show" class="val" checked><i>✓</i></label></span>
-													<#else>
-											<span class="labels">
-												<label><input type="checkbox" name="show" class="val"><i>✓</i></label></span>
-										</#if></td>
-										
-
+											<span><label><input type="checkbox" name="show" class="val"><i>✓</i></label></span>
+										</td>
 									</tr>
 									<#list sonmenu as son>
 									<#if par.menuId==son.parentId>
@@ -125,8 +118,6 @@
 											<span class="labels">
 												<label><input type="checkbox" name="show" class="val"><i>✓</i></label></span>
 										</#if></td>
-										
-
 									</tr>
 									</#if>
 									</#list>
