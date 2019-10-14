@@ -29,11 +29,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/tologin",method=RequestMethod.GET)
 	public String toLogin() {
-		
 		return "user/login";
 	}
-	
-	
 	
 	@RequestMapping(value="logins",method = RequestMethod.POST)
 	public String logins(HttpSession session,HttpServletRequest req,Model model) throws UnknownHostException {
