@@ -109,8 +109,8 @@ a:hover {
 							<#if exituserid??>
 							<#else>
 								<div class="col-md-6 form-group">
-									<span> <label class="control-label">入职时间</label>
-									</span> <input name="hireDate" class="form-control" id="start" onclick="WdatePicker()"
+									<span> <label class="control-label">入职时间</label>  <!-- onclick="WdatePicker()" -->
+									</span> <input name="hireDate" class="form-control" id="start" type="datetime-local"
 										value="${(user.hireTime)!''}"/>
 								</div>
 							</#if>

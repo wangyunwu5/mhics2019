@@ -1,6 +1,7 @@
 package cn.own.mhics.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 @Entity
 @Table(name="person")
@@ -48,7 +55,10 @@ public class Person {
 	@Column(name="user_img")
 	private String userImg;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name="modify_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date modifyTime;
 	
 	@Column(name="modify_user_id")
