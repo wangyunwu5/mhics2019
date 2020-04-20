@@ -32,6 +32,7 @@ public class LoginController {
 		return "user/login";
 	}
 	
+	
 	@RequestMapping(value="logins",method = RequestMethod.POST)
 	public String logins(HttpSession session,HttpServletRequest req,Model model) throws UnknownHostException {
 		String userAccount = req.getParameter("userAccount").trim();
@@ -81,7 +82,6 @@ public class LoginController {
 		}
 		return "redirect:/index/toindex";
 	}
-	
 	
 	@RequestMapping(value="/loginout")
 	public String loginOut(HttpSession session) {

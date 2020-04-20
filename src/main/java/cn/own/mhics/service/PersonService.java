@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.own.mhics.dao.PersonDao;
 import cn.own.mhics.entity.Role;
+import cn.own.mhics.entity.SystemMenu;
 import cn.own.mhics.entity.Person;
 
 @Service
@@ -42,5 +43,16 @@ public class PersonService {
 	}
 	public Person findUserByAccountAndPass(String userAccount, String userPass) {
 		return userDao.findUserByAccountAndPass(userAccount,userPass);
+	}
+	/*
+	 * 待完成功能
+	 */
+	public List<Role> getRoleByAccount(String account) {
+		
+		return null;
+	}
+	public List<SystemMenu> getSystemMenuByRole(Integer roleId) {
+
+		return null;
 	}
 }

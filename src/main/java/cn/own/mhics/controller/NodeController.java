@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.own.mhics.entity.DiaoChaNode;
+import cn.own.mhics.entity.ItemNode;
+import cn.own.mhics.entity.NewPipe;
 import cn.own.mhics.entity.Node;
 import cn.own.mhics.entity.Person;
 import cn.own.mhics.entity.Pipe;
 import cn.own.mhics.entity.Pipes;
 import cn.own.mhics.entity.Project;
 import cn.own.mhics.entity.Standard;
+import cn.own.mhics.entity.newnode;
 import cn.own.mhics.service.DiaoChaNodeService;
 import cn.own.mhics.service.ImgUploadService;
 import cn.own.mhics.service.NodeService;
@@ -82,6 +86,37 @@ public class NodeController {
 		model.addAttribute("projects", projects);
 		return "node/nodeedit";
 	}
+	
+	@RequestMapping(value="/nodeadd",method=RequestMethod.POST)
+	public String nodeadd(newnode newNode,MultipartFile file1, MultipartFile file2, String[] explain, String[] remark, MultipartFile[] files) throws IllegalStateException, IOException {
+		System.out.println("请求接口成功");
+		 String  fileName=file1.getOriginalFilename(); 
+		 String suffix=FilenameUtils.getExtension(fileName);//获取文件后缀名
+		System.out.println("文件名后缀为"+suffix);
+		System.out.println("文件名为"+file1.getOriginalFilename());
+		System.out.println("文件名为"+file2.getOriginalFilename());
+		//String locationsketch = imgus.uploadOne(file1, "locationsketch");
+		//System.out.println("储存后图片的名字为："+locationsketch);
+		for(int i=0;i<files.length;i++) {
+			System.out.println("图片"+i+"为："+files[i].getOriginalFilename());
+		}
+		for(int i=0;i<explain.length;i++) {
+			System.out.println("explain"+i+"为："+explain[i]);
+		}
+		for(int i=0;i<remark.length;i++) {
+			System.out.println("remark"+i+"为："+remark[i]);
+		}
+		//System.out.println("newNode为："+itemnode.newNode);
+		return "success";
+	}
+	
+	@RequestMapping(value="/pipeadd",method=RequestMethod.POST)
+	public String pipeADD(@RequestParam(value = "id") Integer id,NewPipe newPipe,@RequestParam(value = "type") String type) {
+		
+		System.out.println("本次提交的信息为："+"id="+id+"type="+type+"    newpipe:"+newPipe);
+		return "success";
+	}
+	
 
 	@RequestMapping(value = "/nodesave", method = RequestMethod.POST)
 	public String nodeSave(HttpSession session, Node node, @RequestParam(value = "zuobiao") String zuoBiao,
@@ -119,6 +154,7 @@ public class NodeController {
 			@RequestParam(value = "delpipe", required = false) String delPipe)
 			throws IllegalStateException, IOException {
 		System.out.println("当前的登录的用户id为：" + session.getAttribute("userId"));
+		System.out.println("node的信息为"+node);
 		Long userId = (Long) session.getAttribute("userId");
 		Person person = personService.getOneUser(userId);
 		Project pro = projectService.findOne(projectId);

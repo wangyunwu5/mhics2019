@@ -10,21 +10,25 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
-public class CorsFilter implements Filter {
+import org.springframework.stereotype.Component;
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
+@Component
+public class CorsFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
+		System.out.println("CorsFilter的doFilter方法");
 			HttpServletResponse response = (HttpServletResponse) res;
 	        response.setHeader("Access-Control-Allow-Origin", "*");
 	        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
 	        response.setHeader("Access-Control-Max-Age", "3600");//请求的结果将缓存至多3600秒
 	        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 	        chain.doFilter(req, res);
+	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 
 	@Override
